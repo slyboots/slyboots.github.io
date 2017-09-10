@@ -50,6 +50,11 @@
                 "panel": "dedicated"
             },
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "cp_tachyons",
+            "problemMatcher": []
         }
     ]
 }
