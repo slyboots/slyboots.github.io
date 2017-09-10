@@ -213,6 +213,7 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages
+  jekyll-theme-cayman
   minima
 
 BUNDLED WITH
