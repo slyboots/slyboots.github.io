@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Blog
+title: Posts
 hero_text: Blog
 sub_text: I should probably post stuff here...
 ---
@@ -8,12 +8,11 @@ sub_text: I should probably post stuff here...
 <section class="main-content">
     <ul class="posts">
         {% for post in paginator.posts %}
-            <li>
-                <span>{{ post.date | date_to_string }}</span> » <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                <div class="content">
-                        {{ post.excerpt }}
-                </div>
-            </li>
+            {% capture cardtitle %}{{ post.title }}{% endcapture %}
+            {% capture cardsummary %}{{ post.excerpt }}{% endcapture %}
+            {% capture cardcategory %}{{ post.categories | join: ', '}}{% endcapture %}
+            {% capture cardurl %}{{ post.url }}{% endcapture %}
+            {% include postcard.html title=cardtitle summary=cardsummary categories=cardcategory url=cardurl %}
             <hr />
         {% endfor %}
     </ul>
