@@ -4,7 +4,7 @@
   "description": "a static website for github pages",
   "main": "index.js",
   "scripts": {
-    "cp_sass_partials": "(mkdir _sass/scss || true) && cp -r node_modules/tachyons-sass/scss _sass/scss",
+    "cp_sass_partials": "cp -r node_modules/tachyons-sass/scss _sass/",
     "cp_sass_main": "cp node_modules/tachyons-sass/tachyons.scss _sass/tachyons.scss",
     "cp_tachyons": "npm run cp_sass_partials && npm run cp_sass_main",
     "test": "echo \"Error: no test specified\" && exit 1"
