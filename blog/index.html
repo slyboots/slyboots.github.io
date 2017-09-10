@@ -1,18 +1,20 @@
 ---
-layout: default
-title: DWL Blog
+layout: page
+title: Blog
+hero_text: Blog
+sub_text: I should probably post stuff here...
 ---
-{% include pagehero.html title="Blog" tagline="I should probably post stuff here..." %}
+
 <section class="main-content">
     <ul class="posts">
         {% for post in paginator.posts %}
             <li>
                 <span>{{ post.date | date_to_string }}</span> » <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                 <div class="content">
-                        {{ post.content }}
+                        {{ post.excerpt }}
                 </div>
             </li>
-            
+            <hr />
         {% endfor %}
     </ul>
     <hr />
