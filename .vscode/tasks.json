@@ -6,7 +6,7 @@
         {
             "taskName": "Serve Local",
             "type": "shell",
-            "command": "npm run cp_tachyons && bundle exec jekyll serve --incremental --watch",
+            "command": "npm run cp_tachyons && bundle exec jekyll serve --incremental --watch --verbose --trace",
             "group": {
                 "kind": "test",
                 "isDefault": true
