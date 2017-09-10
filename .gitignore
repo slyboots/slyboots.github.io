@@ -1,4 +1,4 @@
 _site/
 .jekyll-metadata
 node_modules
-
+_sass/
