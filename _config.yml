@@ -1,10 +1,15 @@
 name: Dakota Wisdom Lorance
+brand: dwl
+description: The official blog of Dakota!
+url: https://slyboots.github.io
+email: admin@slyb--ts.com
+author: Dakota Wisdom Lorance
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title
 theme: jekyll-theme-cayman
 paginate: 5
 paginate_path: "/blog/page:num/"
 plugins:
-  - jekyll-feed
   - jekyll-sitemap
   - jekyll-paginate
+  - jekyll-feed
