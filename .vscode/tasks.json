@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "Serve Site",
+            "taskName": "Serve Local",
             "type": "shell",
-            "command": "bundle exec jekyll serve",
+            "command": "bundle exec jekyll serve --incremental --watch",
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -37,20 +37,7 @@
             }
         },
         {
-            "taskName": "Watch Site",
-            "type": "shell",
-            "command": "bundle exec jekyll build --watch",
-            "group": "build",
-            "identifier": "watch",
-            "presentation": {
-                "echo": true,
-                "reveal": "silent",
-                "focus": false,
-                "panel": "dedicated"
-            }
-        },
-        {
-            "taskName": "Deploy",
+            "taskName": "Deploy To Master",
             "type": "shell",
             "command": "git checkout master && git merge dev && git push && git checkout dev",
             "group": "none",
