@@ -4,6 +4,9 @@
   "description": "a static website for github pages",
   "main": "index.js",
   "scripts": {
+    "cp_sass_partials": "cp -r ${workspaceRoot}/node_modules/tachyons-sass/scss ${workspaceRoot}/_sass/scss",
+    "cp_sass_main": "cp ${workspaceRoot}/node_modules/tachyons-sass/tachyons.scss ${workspaceRoot}/_sass/tachyons.scss",
+    "cp_tachyons": "npm run cp_sass_partials && npm run cp_sass_main",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

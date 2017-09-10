@@ -6,7 +6,7 @@
         {
             "taskName": "Serve Local",
             "type": "shell",
-            "command": "cp ${workspaceRoot}/node_modules/tachyons-sass/scss/* ${workspaceRoot}/_sass/ && bundle exec jekyll serve --incremental --watch",
+            "command": "npm run cp_tachyons && bundle exec jekyll serve --incremental --watch",
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -23,7 +23,7 @@
         {
             "taskName": "Build Site",
             "type": "shell",
-            "command": "cp ${workspaceRoot}/node_modules/tachyons-sass/scss/* ${workspaceRoot}/_sass/ && bundle exec jekyll build",
+            "command": "npm run cp_tachyons && bundle exec jekyll build",
             "group": {
                 "kind": "build",
                 "isDefault": true
