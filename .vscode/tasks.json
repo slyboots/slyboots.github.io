@@ -14,7 +14,8 @@
                 "reveal": "silent",
                 "focus": true,
                 "panel": "shared"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "taskName": "Build Site",

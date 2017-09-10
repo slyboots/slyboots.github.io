@@ -3,3 +3,6 @@ markdown: kramdown
 permalink: /blog/:year/:month/:day/:title
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-paginate
+theme: jekyll-theme-cayman
