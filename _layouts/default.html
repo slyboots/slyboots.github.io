@@ -3,17 +3,20 @@ title: DWL
 ---
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>{{ page.title }}</title>
-        {% feed_meta %}
-        <!-- link to main stylesheet -->
-        <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-    </head>
-    <body style>
-        <div class="container">
-            {{ content }}
-        </div>
-        {% include defaultfooter.html %}
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+    {% feed_meta %}
+    <!-- link to main stylesheet -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+</head>
+
+<body style>
+    <div>
+        {{ content }}
+    </div>
+    {% include defaultfooter.html %}
+</body>
+
 </html>
