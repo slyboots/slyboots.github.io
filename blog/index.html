@@ -5,17 +5,15 @@ hero_text: Blog
 sub_text: I might post here occaisionally
 ---
 
-<section class="main-content">
-    <ul class="posts">
-        {% for post in paginator.posts %}
-            {% capture cardtitle %}{{ post.title }}{% endcapture %}
-            {% capture cardsummary %}{{ post.content }}{% endcapture %}
-            {% capture cardcategory %}{{ post.categories | join: ', '}}{% endcapture %}
-            {% capture cardurl %}{{ post.url }}{% endcapture %}
-            {% include textcard.html title=cardtitle content=cardsummary %}
-            <hr />
-        {% endfor %}
-    </ul>
+<div class="cf">
+  {% for post in paginator.posts %}
+      {% capture posttitle %}{{ post.title }}{% endcapture %}
+      {% capture postcontent %}{{ post.content }}{% endcapture %}
+      {% capture posturl %}{{ post.url }}{% endcapture %}
+      <div class="fl w-100 w-20-ns tc pv5 bg-black-05">
+        {% include textcard.html title=posttitle content=postcontent url=posturl %}
+      </div>
+  {% endfor %}
     <hr />
     <!-- Pagination links -->
     <div class="pagination flex-row items-center">
@@ -31,4 +29,4 @@ sub_text: I might post here occaisionally
           <span class="next ">Next</span>
         {% endif %}
     </div>
-</section>
+</div>
