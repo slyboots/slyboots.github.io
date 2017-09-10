@@ -59,8 +59,9 @@
                 "echo": false,
                 "reveal": "never",
                 "focus": false,
-                "panel": "shared"
-            }
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
         }
     ]
 }
