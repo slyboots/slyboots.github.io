@@ -2,7 +2,8 @@
 layout: default
 title: DWL Blog
 ---
-    <h1>{{ page.title }}</h1>
+{% include pagehero.html title="Blog" tagline="I should probably post stuff here..." %}
+<section class="main-content">
     <ul class="posts">
         {% for post in paginator.posts %}
             <li>
@@ -29,4 +30,5 @@ title: DWL Blog
           <span class="next ">Next</span>
         {% endif %}
     </div>
-      
+    <hr />
+</section>
