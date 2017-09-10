@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "Serve Local Site",
+            "taskName": "Serve Site",
             "type": "shell",
             "command": "bundle exec jekyll serve",
             "group": "build",
@@ -14,6 +14,35 @@
                 "reveal": "silent",
                 "focus": true,
                 "panel": "shared"
+            }
+        },
+        {
+            "taskName": "Build Site",
+            "type": "shell",
+            "command": "bundle exec jekyll build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "identifier": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            }
+        },
+        {
+            "taskName": "Watch Site",
+            "type": "shell",
+            "command": "bundle exec jekyll build --watch",
+            "group": "build",
+            "identifier": "watch",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated"
             }
         }
     ]
