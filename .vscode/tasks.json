@@ -7,7 +7,10 @@
             "taskName": "Serve Site",
             "type": "shell",
             "command": "bundle exec jekyll serve",
-            "group": "build",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
             "identifier": "serve",
             "presentation": {
                 "echo": false,
