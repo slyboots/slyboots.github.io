@@ -48,6 +48,19 @@
                 "focus": false,
                 "panel": "dedicated"
             }
+        },
+        {
+            "taskName": "Deploy",
+            "type": "shell",
+            "command": "git checkout master && git merge dev && git push && git checkout dev",
+            "group": "none",
+            "identifier": "deploy",
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "focus": false,
+                "panel": "shared"
+            }
         }
     ]
 }
