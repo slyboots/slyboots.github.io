@@ -2,17 +2,17 @@
 layout: page
 title: Posts
 hero_text: Blog
-sub_text: I should probably post stuff here...
+sub_text: I might post here occaisionally
 ---
 
 <section class="main-content">
     <ul class="posts">
         {% for post in paginator.posts %}
             {% capture cardtitle %}{{ post.title }}{% endcapture %}
-            {% capture cardsummary %}{{ post.excerpt }}{% endcapture %}
+            {% capture cardsummary %}{{ post.content }}{% endcapture %}
             {% capture cardcategory %}{{ post.categories | join: ', '}}{% endcapture %}
             {% capture cardurl %}{{ post.url }}{% endcapture %}
-            {% include postcard.html title=cardtitle summary=cardsummary categories=cardcategory url=cardurl %}
+            {% include textcard.html title=cardtitle content=cardsummary %}
             <hr />
         {% endfor %}
     </ul>
