@@ -4,29 +4,31 @@ title: Posts
 hero_text: Blog
 sub_text: I might post here occaisionally
 ---
-
-<div class="cf">
-  {% for post in paginator.posts %}
+<section class="mw7 center avenir">
+  <h2 class="baskerville fw1 ph3 ph0-l">Posts</h2>
+  {% for post in site.posts %}
       {% capture posttitle %}{{ post.title }}{% endcapture %}
-      {% capture postcontent %}{{ post.content }}{% endcapture %}
+      {% capture postexcerpt %}{{ post.excerpt }}{% endcapture %}
       {% capture posturl %}{{ post.url }}{% endcapture %}
-      <div class="fl w-100 w-20-ns tc pv5 bg-black-05">
-        {% include textcard.html title=posttitle content=postcontent url=posturl %}
-      </div>
+      {% capture postimg %}{{ post.imgurl }}{% endcapture %}
+      {% capture postalt %}{{ post.imgalt }}{% endcapture %}
+      {% include postpreview.html title=posttitle excerpt=postexcerpt url=posturl imgurl=postimg alttxt=postalt %}
   {% endfor %}
-    <hr />
-    <!-- Pagination links -->
-    <div class="pagination flex-row items-center">
-        {% if paginator.previous_page %}
-          <a href="{{ paginator.previous_page_path }}" class="previous">Previous</a>
-        {% else %}
-          <span class="previous">Previous</span>
-        {% endif %}
-        <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
-        {% if paginator.next_page %}
-          <a href="{{ paginator.next_page_path }}" class="next">Next</a>
-        {% else %}
-          <span class="next ">Next</span>
-        {% endif %}
-    </div>
+</section>
+<hr />
+<div>
+  <!-- Pagination links -->
+  <!-- <div class="pagination flex-row items-center">
+      {% if paginator.previous_page %}
+        <a href="{{ paginator.previous_page_path }}" class="previous">Previous</a>
+      {% else %}
+        <span class="previous">Previous</span>
+      {% endif %}
+      <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+      {% if paginator.next_page %}
+        <a href="{{ paginator.next_page_path }}" class="next">Next</a>
+      {% else %}
+        <span class="next ">Next</span>
+      {% endif %}
+  </div> -->
 </div>
