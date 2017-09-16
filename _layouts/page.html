@@ -1,8 +1,7 @@
 ---
 layout: default
 ---
-{% capture pageherotext %}{{ page.hero_text }}{% endcapture %}
-{% capture pagesubtext %}{{ page.sub_text }}{% endcapture %}
-{% include pagehero.html herotext=pageherotext subtext=pagesubtext %}
+{% capture pagetitle %}{{ page.title }}{% endcapture %}
+{% include pagenav.html title=pagetitle %}
 
 {{ content }}

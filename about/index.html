@@ -1,10 +1,10 @@
 ---
-layout: page
+layout: default
 title: Me
-hero_text: Dakota Facts
-sub_text: Facts about Dakota
+heading: Dakota Facts
 ---
-
+{% capture pagetitle %}{{ page.title }}{% endcapture %}
+{% include pagenav.html title=pagetitle subtext=pagesubtext %}
 <section class="main-content">
     <h2>I...</h2>
     <ul>

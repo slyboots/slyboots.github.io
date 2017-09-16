@@ -1,9 +1,12 @@
 ---
-layout: page
+layout: default
 title: Welcome
 hero_text: 52 Projects
 sub_text: in 52 weeks
 ---
+{% capture pageherotext %}{{ page.hero_text }}{% endcapture %}
+{% capture pagesubtext %}{{ page.sub_text }}{% endcapture %}
+{% include pagehero.html herotext=pageherotext subtext=pagesubtext %}
 
 <section class="main-content">
     <p>My name is Dakota Wisdom Lorance.</p>
