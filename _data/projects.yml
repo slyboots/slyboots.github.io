@@ -1,4 +1,5 @@
 - name: slyboots.github.io
+  id: 0
   description: A simple static website for sharing my projects and thoughts
   title: My Website!
   image: assets/images/slyboots-website.png
