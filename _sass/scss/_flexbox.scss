@@ -19,6 +19,16 @@
 .flex { display: flex; }
 .inline-flex { display: inline-flex; }
 
+@for $grow from 0 through 9 {
+  @for $shrink from 0 through 9 {
+    .flex-#{$grow}-#{$shrink} {
+      flex: $grow $shrink auto;
+      min-width: 0;  /* 1 */
+      min-height: 0; /* 1 */
+    }
+  }
+}
+
 /* 1. Fix for Chrome 44 bug.
  * https://code.google.com/p/chromium/issues/detail?id=506893 */
 .flex-auto {
