@@ -3,7 +3,6 @@ title: DWL
 ---
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>{{ page.title }}</title>
     <meta charset="utf-8">
@@ -13,21 +12,23 @@ title: DWL
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 </head>
 
-<body class="w-100">
-    {{ content }}
-    <footer class="bg-near-black white-80 pv2 ph2 w-100 db bottom-0 fixed">
-        <p class="f6 flex justify-between items-center">
-            <span class="flex items-center dib mr4 mr5-ns">
-                <span class="flex self-stretch br-100 overflow-hidden">{% avatar slyboots size=32 classes="avatar br-100" %}</span>
-                <strong class="pl1">Dakota Wisdom Lorance</strong>
+<body class="w-100 flex flex-row flex-wrap raleway">
+    {% capture location %}{{ page.location_context }}{% endcapture %}
+    {% include pagenav.html title=location %}
+    <main class="flex flex-row flex-wrap w-100 w-80-ns center">
+        {{ content }}
+    </main>
+    <footer class="bg-near-black white-80 pv2 ph3 w-100 db bottom-0 fixed">
+        <span class="flex justify-between items-center">
+            <span class="flex flex-auto mv3">
+                <strong class="tracked-tight">Dakota Wisdom Lorance</strong>
             </span>
-
             <span class="dib">
                 <a class="link white-80 hover-light-purple" href="https://github.com/slyboots">@slyboots</a> /
                 <a class="link white-80 hover-gold" href="https://pages.github.com/">Powered by Github Pages</a> /
                 <a class="link white-80 hover-green" href="http://tachyons.io">Tachyons</a>
             </span>
-        </p>
+        </span>
     </footer>
 </body>
 

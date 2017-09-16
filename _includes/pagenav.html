@@ -1,21 +1,22 @@
-<header class="sans-serif">
-    <nav class="w-100 flex flex-row flex-wrap justify-between items-center bb b--white-10" style="background-color:#050506">
-        <span class="link white-70 hover-white no-underline dn flex-ns items-center pa3" href="{{- site.baseurl -}}{% link index.html %}">
-            <!-- <svg class="dib h1 w1" data-icon="grid" viewBox="0 0 32 32" style="fill:currentcolor">
-                <title>Super Normal Icon Mark</title>
-                <path d="M2 2 L10 2 L10 10 L2 10z M12 2 L20 2 L20 10 L12 10z M22 2 L30 2 L30 10 L22 10z M2 12 L10 12 L10 20 L2 20z M12 12 L20 12 L20 20 L12 20z M22 12 L30 12 L30 20 L22 20z M2 22 L10 22 L10 30 L2 30z M12 22 L20 22 L20 30 L12 30z M22 22 L30 22 L30 30 L22 30z">
-                </path>
-            </svg> -->
-            <span class="flex items-center dib mr4 mr5-ns">
-                <span class="flex self-stretch br-100 overflow-hidden">{% avatar slyboots size=32 classes="avatar br-100" %}</span>
-                <h1 class="dib white-70 ttu pl2 mv0 f2 lh-copy">{{- include.title -}}</h1>
+<header class="w-100 raleway">
+    <nav class="w-100 flex flex-row flex-wrap justify-between" style="background-color:#050506">
+        <span class="db flex-ns items-center pa3">
+            <a href="{{ site.baseurl }}{% link index.html %}">
+                <span class="flex self-stretch br-100 overflow-hidden">
+                    {%- avatar slyboots size=48 -%}
+                </span>
+            </a>
+            <span class="pl2 ttu">
+                <a class="link f2 tracked white-70 hover-white no-underline" href="{{ site.baseurl }}{% link index.html %}">
+                    {{- include.title -}}
+                </a>
             </span>
         </span>
         <div class="db flex-ns items-center pa3">
-            <a class="tracked f6 {% if page.location_context == 'home' %}fw4 white-50{% else %}fw8 white{% endif %} ppv2 ph3 link dib white" href="{{ site.baseurl }}{% link index.html %}">Home</a>
-            <a class="tracked f6 {% if page.location_context == 'about' %}fw4 white-50{% else %}fw8 white{% endif %} pv2 ph3 link dib"    href="{{ site.baseurl }}{% link about/index.html %}">About Me</a>
-            <a class="tracked f6 {% if page.location_context == 'projects' %}fw4 white-50{% else %}fw8 white{% endif %} pv2 ph3 link dib" href="{{ site.baseurl }}{% link projects/index.html %}">Projects</a>
-            <a class="tracked f6 {% if page.location_context == 'blog' %}fw4 white-50{% else %}fw8 white{% endif %} pv2 ph3 link dib"     href="{{ site.baseurl }}{% link blog/index.html %}">Blog</a>
+            <a class="f4 pv2 ph3 link dib {% if page.location_context == 'home' %}fw4 white-50{% else %}fw8 white{% endif %} "    href="{{ site.baseurl }}{% link index.html %}">Home</a>
+            <a class="f4 pv2 ph3 link dib {% if page.location_context == 'about' %}fw4 white-50{% else %}fw8 white{% endif %}"    href="{{ site.baseurl }}{% link about/index.html %}">About Me</a>
+            <a class="f4 pv2 ph3 link dib {% if page.location_context == 'projects' %}fw4 white-50{% else %}fw8 white{% endif %}" href="{{ site.baseurl }}{% link projects/index.html %}">Projects</a>
+            <a class="f4 pv2 ph3 link dib {% if page.location_context == 'blog' %}fw4 white-50{% else %}fw8 white{% endif %}"     href="{{ site.baseurl }}{% link blog/index.html %}">Blog</a>
         </div>
     </nav>
 </header>
