@@ -204,7 +204,6 @@ GEM
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
     thread_safe (0.3.6)
-    typescript_bridge (0.1.0.pre.alpha)
     typhoeus (0.8.0)
       ethon (>= 0.8.0)
     tzinfo (1.2.3)
@@ -220,7 +219,6 @@ DEPENDENCIES
   jekyll-compose
   jekyll-feed
   jekyll-sitemap
-  typescript_bridge
 
 BUNDLED WITH
-   1.15.4
+   1.16.0.pre.2
