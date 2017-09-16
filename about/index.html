@@ -5,10 +5,20 @@ heading: Dakota Facts
 location_context: about
 ---
 
-<h2>I...</h2>
-<ul>
-    <li>Am married to the most amazing woman. Her name is Michelle!</li>
-    <li>Take care of two adorably annoying kittens. Their names are Whisp and Pan!</li>
-    <li>I like long walks on the beach.</li>
-    <li>And dark beer.</li>
-</ul>
+<div class="w-100 overflow-auto">
+    <h2 class="f-subheadline lh-solid tracked fw1 ttu">
+        Dakota Facts
+    </h2>
+</div>
+<div class="flex-auto">
+    &nbsp;
+</div>
+<div class="flex-2-1 overflow-auto">
+    <ul class="list pa3 mt0 center">
+        {% for fact in site.data.dakota_facts %}
+            <li class="f3 lh-copy pv3 flex items-center">
+                {% include dataicon.html icon="ei-chevron-right" %}<span class="{% cycle 'colors':'red','orange','yellow','light-purple','light-pink','green',blue' %}">{{ fact.text }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
