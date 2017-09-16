@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% capture pagetitle %}{{ page.title }}{% endcapture %}
-{% include pagenav.html title=pagetitle %}
+{% capture location %}{{ page.location_context }}{% endcapture %}
+{% include pagenav.html title=location %}
 
 {{ content }}
