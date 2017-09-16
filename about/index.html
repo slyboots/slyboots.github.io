@@ -2,9 +2,10 @@
 layout: default
 title: Me
 heading: Dakota Facts
+location_context: about
 ---
-{% capture pagetitle %}{{ page.title }}{% endcapture %}
-{% include pagenav.html title=pagetitle subtext=pagesubtext %}
+{% capture location %}{{ page.location_context }}{% endcapture %}
+{% include pagenav.html title=location %}
 <section class="main-content">
     <h2>I...</h2>
     <ul>
