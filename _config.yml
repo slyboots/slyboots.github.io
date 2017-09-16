@@ -6,26 +6,26 @@ title: DWL Blog
 description: The official blog of Dakota!
 url: https://slyboots.github.io
 github: [metadata]
-
 markdown: kramdown
-
 paginate: 5
 paginate_path: "/blog/page:num/"
 permalink: /blog/:year/:month/:day/:title
-
+verbose: true
+excerpt_separator: <!-- read more -->
 sass:
   sass_dir: _sass
   style: compact
-
 plugins:
   - jekyll-sitemap
   - jekyll-paginate
   - jekyll-feed
-
 exclude:
   - package.json
   - package-lock.json
   - node_modules
   - .vscode/
 
-verbose: true
+collections:
+  _projects:
+    output: true
+    permalink: /:collection/:name
