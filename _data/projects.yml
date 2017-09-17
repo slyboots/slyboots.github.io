@@ -1,7 +1,7 @@
 - name: slyboots.github.io
   id: 0
   description: A simple static website for sharing my projects and thoughts
-  title: My Website!
+  title: This Website!
   image: assets/images/slyboots-website.png
   url: https://github.com/slyboots/slyboots.github.io
   technology:
@@ -13,8 +13,4 @@
       link: http://sass-lang.com
     - name: tachyons
       link: http://tachyons.io
-  categories:
-    - webdev
-    - design
-    - css
-    - html
+  categories: [webdev, design, css, html ]
