@@ -13,4 +13,8 @@
       link: http://sass-lang.com
     - name: tachyons
       link: http://tachyons.io
-  categories: [webdev, design, css, html ]
+  categories:
+    - webdev
+    - design
+    - css
+    - html
