@@ -9,17 +9,17 @@ location_context: blog
   <h2 class="baskerville fw1 ph3 ph0-l">Posts</h2>
   {% for post in site.posts %}
     <article class="bb b--black-10">
-      <a class="db pv4 ph3 ph0-l no-underline black dim" href="{{ post.url }}">
+      <a class="db pv4 ph3 ph0-l no-underline black dim" href="{{post.url}}">
         <div class="flex flex-column flex-row-ns">
           <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
-            <img src="{{ post.imgurl }}" class="db" alt="{{ post.imgalt }}">
+            <img src="{{post.imgurl}}" class="db" alt="{{post.imgalt}}">
           </div>
           <div class="w-100 w-60-ns pl3-ns">
-            <h1 class="f3 fw1 baskerville mt0 lh-title">{{ post.title }}</h1>
+            <h1 class="f3 fw1 baskerville mt0 lh-title">{{post.title}}</h1>
             <p class="f6 f5-l lh-copy">
-                    {{ post.excerpt }}
+                {{post.excerpt}}
             </p>
-            <p class="f6 lh-copy mv0">By {{ site.author }}</p>
+            <p class="f6 lh-copy mv0">By {{site.author}}</p>
           </div>
         </div>
       </a>
@@ -31,13 +31,13 @@ location_context: blog
   <!-- Pagination links -->
   <div class="pagination flex-row items-center">
       {% if paginator.previous_page %}
-        <a href="{{ paginator.previous_page_path }}" class="previous">Previous</a>
+        <a href="{{paginator.previous_page_path}}" class="previous">Previous</a>
       {% else %}
         <span class="previous">Previous</span>
       {% endif %}
-      <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+      <span class="page_number ">Page: {{paginator.page}} of {{paginator.total_pages}}</span>
       {% if paginator.next_page %}
-        <a href="{{ paginator.next_page_path }}" class="next">Next</a>
+        <a href="{{paginator.next_page_path}}" class="next">Next</a>
       {% else %}
         <span class="next ">Next</span>
       {% endif %}

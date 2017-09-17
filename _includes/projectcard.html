@@ -1,0 +1,22 @@
+{% assign projectcategories = include.categories %}
+
+<div class="flex flex-auto w-100 w-50-l pr2-l pl2-ns mb4 mb0-l outline">
+    <div class="flex-auto pa4">
+        <div class="flex flex-auto f4 f2-l fw7 mt0 pv3-l bb-l bb--black">
+            <span class="flex-auto">{{include.id}}</span>
+            <span>{{include.name}}</span>
+        </div>
+        <div class="flex flex-auto db-ns f6 fw7 lh-solid mb3 mb0-m mb4-l">
+            {% for category in {{include.categories}} %}
+                <span class="db-ns f6 fw7 lh-solid mb3 mb0-m mb4-l">{{category}}</span>
+            {% endfor %}
+        </div>
+        <p class="lh-copy mt2 mt3-m mt5-l f6">
+            <span class="db-ns f6 fw7 lh-solid mb3 mb0-m mb4-l"></span>
+            <span class="fw9 f6 f1-l db lh-title mb3 mb4-l">{{include.title}}</span>
+            <span class="db-l measure-wide">
+                {{include.description}}
+          </span>
+        </p>
+    </div>
+</div>
