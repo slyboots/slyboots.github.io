@@ -4,23 +4,32 @@ title: Things and Stuff
 heading: All Of My Projects!
 location_context: projects
 ---
-
+<h1 class="w-50">Finished: {{site.data.projects | where:"finished","true" | size}}</h1>
+<h1 class="w-50">Incomplete: {{site.data.projects | where:"finished","false" | size}}</h1>
 {% for project in site.data.projects %}
-<div class="flex flex-auto w-100 w-50-l pr2-l pl2-ns mb4 mb0-l outline">
-        <div class="flex-auto pa4">
-            <div class="flex flex-auto f4 f2-l fw7 mt0 pv3-l bb-l bb--black">
-                <span class="dn dib-ns flex-auto"># {{project.id}}: </span>
-                <span>{{project.name}}</span>
-            </div>
-            <div class="flex flex-column flex-wrap items-center-ns lh-copy mt1 mt2-m mt3-l f6">
+<div class="flex flex-auto w-100 w-25-l pr2-l pl2-ns mb4 mb0-l outline">
+    <div class="flex-auto pa4">
+        <div class="flex flex-auto items-end f4 f2-l fw7 mt0 pv3-l bb-l bb--black">
+                <span class="dn dib-ns">{{project.id}}:&nbsp;</span>
+                <span class="flex-auto">{{project.name}}</span>
+                <span class="flex dib-ns">
+                    {% if project.finished == true %}
+                        {% include dataicon.html icon="ei-check" size="m" class="green bg-green" %}
+                    {% else %}
+                        {% include dataicon.html icon="ei-exclamation" size="m" class="red bg-red" %}
+                    {% endif %}
+                </span>
+        </div>
+        <div class="flex flex-column flex-wrap items-center-ns lh-copy mt1 mt2-m mt3-l f6">
                 <span class="fw8 fw1-ns f3 f1-l db lh-title mb3 mb4-l">{{project.title}}</span>
                 <span class="fw8-ns db-l measure-wide">{{project.description}}</span>
-            </div>
-            <div class="flex flex-auto db-ns f6 fw7 lh-solid mb0 justify-start justify-end-ns">
-                {% for category in project.categories %}
-                    <span class="flex dib f6 link dim br-pill ba bw1 ph1 pv1 mt3 dib dark-gray">{{category}} </span>
-                {% endfor %}
-            </div>
+        </div>
+        <div class="flex flex-auto db-ns f6 fw7 lh-solid mb0 justify-start justify-end-ns">
+            {% for category in project.categories %}
+                <span class="flex dib f6 link dim br-pill ba bw1 ph1 pv1 mt3 dib dark-gray">{{category}} </span>
+            {% endfor %}
         </div>
     </div>
+</div>
+<div class="flex flex-0-1"></div>
 {% endfor %}
