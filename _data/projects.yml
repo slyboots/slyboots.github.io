@@ -1,8 +1,9 @@
 - name: slyboots.github.io
   id: 0
   description: A simple static website for sharing my projects and thoughts
-  title: This Website!
+  title: The website you're on right now...
   image: assets/images/slyboots-website.png
+  finished: true
   url: https://github.com/slyboots/slyboots.github.io
   technology:
     - name: github pages
@@ -18,3 +19,18 @@
     - design
     - css
     - html
+- name: Simple Synth
+  id: 1
+  description: A small single oscillator sync, with only 3 waveform options and a one octave pitch slider
+  title: It makes noise!
+  image: assets/images/slyboots-website.png
+  finished: false
+  url: https://github.com/slyboots/slyboots.github.io
+  technology:
+    - name: Web Audio API
+    - name: tachyons
+      link: http://tachyons.io
+  categories:
+    - webdev
+    - dsp
+    - javascript
