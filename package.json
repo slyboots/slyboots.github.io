@@ -24,6 +24,14 @@
   },
   "homepage": "https://github.com/slyboots/slyboots.github.io#readme",
   "dependencies": {
+    "tachyons": "^4.8.1",
     "tachyons-sass": "^4.8.1"
+  },
+  "devDependencies": {
+    "ts-loader": "^2.3.7",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.2",
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "webpack": "^3.6.0"
   }
 }
