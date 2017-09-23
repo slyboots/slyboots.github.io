@@ -24,8 +24,8 @@
   description: A small single oscillator sync, with only 3 waveform options and a one octave pitch slider
   title: It makes noise!
   image: assets/images/slyboots-website.png
-  finished: false
-  url: https://github.com/slyboots/slyboots.github.io
+  finished: true
+  url: https://github.com/slyboots/1-simplesynth
   technology:
     - name: Web Audio API
     - name: tachyons
