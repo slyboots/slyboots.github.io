@@ -25,7 +25,7 @@ exclude:
   - .vscode/
   - webpack.main.js
   - .jekyll-metadata
-
+  - manage
 sass:
   sass_dir: _sass
   style: compact
