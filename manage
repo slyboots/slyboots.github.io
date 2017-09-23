@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 #**************************************************#
 #                   manage
 #                   written by dwl
@@ -23,94 +23,119 @@ PROJECTS_FILE = os.path.join(DATA_DIR, "projects.yml")
 
 
 def project_ops(args):
-    pprint(args)
-    return
-    with open(PROJECTS_FILE) as pf:
-        current_projects = yaml.load(pf.read())
-    yaml.dump(current_projects, canonical=False,
-              default_flow_style=False, indent=2)
-    with open(PROJECTS_FILE, mode="a+") as pf:
-        name = args.name
-        desc = args.description
-        title = args.title
-        url = args.url
-        categories = ""
-        technology = ""
-        if args.category:
-            for cat in args.category:
-                categories = categories + f"\n    - {cat}"
-        if args.technology:
-            for tech in args.technology:
-                technology = technology + f"\n    - {tech}"
-        if not '/' in args.image:
-            image = os.path.join(IMAGE_DIR, args.image)
+   # var defs
+    input_name = None
+    input_desc = None
+    input_title = None
+    input_url = None
+    input_categories = None
+    input_technology = None
+    input_image = None
+   # end var defs
+   # function defs
+    def __get_input__():
+        nonlocal input_name
+        nonlocal input_desc
+        nonlocal input_title
+        nonlocal input_url
+        nonlocal input_categories
+        nonlocal input_technology
+        nonlocal input_image
+        print("Creating new project to add to site data!")
+        while input_name is None or input_name is '':
+            input_name = input("Project Name: ")
+        while input_desc is None or input_desc is '':
+            input_desc = input("Description: ")
+        while input_title is None or input_title is '':
+            input_title = input("Project Title: ")
+        while input_url is None or input_url is '':
+            input_url = input("Host URL: ")
+        while input_categories is None or input_categories is '':
+            input_categories = [cat.strip() for cat in input("Categories (comma separated): ").split(',')]
+        while input_technology is None or input_technology is '':
+            input_technology = [tec.strip() for tec in input("Technology (comma separated): ").split(',')]
+        while input_image is None or input_image is '':
+            input_image = input("Path to Project Image: ")
+    # end __get_input__
+    def __store_args__(args):
+        print("Adding new project to site data!")
+        input_name = args.name
+        input_desc = args.description
+        input_title = args.title
+        input_url = args.url
+        input_categories = [cat.strip() for cat in args.category]
+        input_technology = [tec.strip() for tec in args.technology]
+        input_image = args.image
+    # end __store_args__
+    def __should_prompt__(args):
+        """ returns true if no arguments were passe. false otherwise """
+        return all(v is None for (k,v) in vars(args).items() if k is not 'func')
+    # end __should_prompt__
+    def __to_yaml_list__(input_list=None):
+        yaml_list = ""
+        if input_list:
+            for item in input_list:
+                yaml_list = yaml_list + f"\n    - {item}"
+        return yaml_list
+    # end __to_yaml_list__
+    def __resolve_img_path__(path):
+        if not '/' in path:
+            return os.path.join(IMAGE_DIR, path)
         else:
-            image = args.image
-
+            return path
+    # end __resolve_img_path__
+    def __get_project_count__():
+        with open(PROJECTS_FILE) as pf:
+            current_projects = yaml.load(pf.read())
+        return len(current_projects)
+    # end __get_project_count__
+   # end function defs
+    if __should_prompt__(args):
+        __get_input__()
+    else:
+        __store_args__(args)
+    with open(PROJECTS_FILE, mode="a+") as pf:
+        np_name         = input_name
+        np_desc         = input_desc
+        np_title        = input_title
+        np_url          = input_url
+        np_id           = __get_project_count__()
+        np_categories   = __to_yaml_list__(input_categories)
+        np_technology   = __to_yaml_list__(input_technology)
+        np_image        = __resolve_img_path__(input_image)
         new_project = f"""
-- name: {name}
-  id: {len(current_projects)}
-  description: {desc}
-  title: {title}
-  image: {image}
+- name: {np_name}
+  id: {np_id}
+  description: {np_desc}
+  title: {np_title}
+  image: {np_image}
   finished: False
-  url: {url}
-  technology:{technology}
-  categories:{categories}"""
+  url: {np_url}
+  technology:{np_technology}
+  categories:{np_categories}"""
         pf.write(new_project)
-        # yaml.dump(new_project, pf, default_flow_style=False,
-        #           indent=2, canonical=False, line_break=True)
-
 
 # ARGPARSE CODE
-PARSER = ArgumentParser(prog="manage")
-SUBPARSERS = PARSER.add_subparsers(help="sub-command help")
+PARSER: ArgumentParser = ArgumentParser(prog="manage", argument_default=argparse.OPTIONAL)
+SUBPARSERS: argparse._SubParsersAction = PARSER.add_subparsers(help="sub-command help")
 
 # Project commands
-PROJECT_PARSER = SUBPARSERS.add_parser(
-    'project', help="project management"
-)
-PROJECT_SUBPARSERS = PROJECT_PARSER.add_subparsers(
-    help="project sub-commands"
-)
-PROJECT_NEW_PARSER = PROJECT_SUBPARSERS.add_parser(
-    'new', help="add new project"
-)
-PROJECT_NEW_PARSER.add_argument(
-    "-n", "--name",
-    help="project name",
-)
-PROJECT_NEW_PARSER.add_argument(
-    "-d", "--description",
-    help="project summary",
-)
-PROJECT_NEW_PARSER.add_argument(
-    "-t", "--title",
-    help="project title",
-)
-PROJECT_NEW_PARSER.add_argument(
-    "-i", "--image",
-    help="project image",
-)
-PROJECT_NEW_PARSER.add_argument(
-    "-u", "--url",
-    help="project url",
-)
-PROJECT_NEW_PARSER.add_argument(
-    "-c", "--category",
-    action="append",
-    help="project name"
-)
-PROJECT_NEW_PARSER.add_argument(
-    "-y", "--technology",
-    action="append",
-    help="project tech used"
-)
+PROJECT_PARSER: ArgumentParser = SUBPARSERS.add_parser('project', help="project management")
+PROJECT_SUBPARSERS: argparse._SubParsersAction = PROJECT_PARSER.add_subparsers(help="project sub-commands")
+PROJECT_NEW_PARSER: ArgumentParser = PROJECT_SUBPARSERS.add_parser('new', help="add new project")
+PROJECT_NEW_PARSER.add_argument("-n", "--name", help="project name")
+PROJECT_NEW_PARSER.add_argument("-d", "--description", help="project summary")
+PROJECT_NEW_PARSER.add_argument("-t", "--title", help="project title")
+PROJECT_NEW_PARSER.add_argument("-i", "--image", help="project image")
+PROJECT_NEW_PARSER.add_argument("-u", "--url", help="project url")
+PROJECT_NEW_PARSER.add_argument("-c", "--category",action="append", help="project name")
+PROJECT_NEW_PARSER.add_argument("-y", "--technology",action="append", help="project tech used")
 PROJECT_NEW_PARSER.set_defaults(func=project_ops)
 
 if __name__ == "__main__":
-    ARGS = PARSER.parse_args()
-    # try:
-    ARGS.func(ARGS)
-    # except AttributeError:
-    #     PARSER.print_help()
+    PARSER.parse_args()
+    try:
+        ARGS = PARSER.parse_args()
+        ARGS.func(ARGS)
+    except AttributeError:
+        PARSER.print_help()
