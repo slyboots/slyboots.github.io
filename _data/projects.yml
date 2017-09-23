@@ -25,7 +25,7 @@
   title: It makes noise!
   image: assets/images/slyboots-website.png
   finished: true
-  url: https://github.com/slyboots/1-simplesynth
+  url: http://dakotalorance.com/1-simplesynth
   technology:
     - name: Web Audio API
     - name: tachyons

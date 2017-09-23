@@ -4,14 +4,13 @@ title: Things and Stuff
 heading: All Of My Projects!
 location_context: projects
 ---
-<h1 class="w-50">Finished: {{site.data.projects | where:"finished","true" | size}}</h1>
-<h1 class="w-50">Incomplete: {{site.data.projects | where:"finished","false" | size}}</h1>
+<h1 class="w-100">Finished: {{site.data.projects | where:"finished","true" | size}}</h1>
 {% for project in site.data.projects %}
-<div class="flex flex-auto w-100 w-25-l pr2-l pl2-ns mb4 mb0-l outline">
+<div class="flex flex-auto w-100 w-25-l pr2-l pl2-ns mb4 mb0-l outline mh2-ns">
     <div class="flex-auto pa4">
         <div class="flex flex-auto items-end f4 f2-l fw7 mt0 pv3-l bb-l bb--black">
                 <span class="dn dib-ns">{{project.id}}:&nbsp;</span>
-                <span class="flex-auto">{{project.name}}</span>
+                <span class="flex-auto"><a href="{{project.url}}" class="db link near-black">{{project.name}}</a></span>
                 <span class="flex dib-ns">
                     {% if project.finished == true %}
                         {% include dataicon.html icon="ei-check" size="m" class="green bg-green" %}
