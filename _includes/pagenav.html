@@ -1,20 +1,18 @@
 <header class="w-100 raleway">
     <nav class="w-100 flex flex-row flex-wrap justify-between" style="background-color:#050506">
-        <span class="db flex-ns items-center pa3">
+        <span class="inline-flex flex-ns items-center pa3 grow">
             <a href="{{ site.baseurl }}{% link index.html %}">
                 <span class="flex self-stretch br-100 overflow-hidden">
                     {%- avatar slyboots size=48 -%}
                 </span>
             </a>
-            <span class="pl2 ttu">
-                <a class="link f2 tracked white-70 hover-white no-underline" href="{{ site.baseurl }}{% link index.html %}">
-                    {{- include.title -}}
-                </a>
+            <span class="pl2 ttu link f2 tracked white-70 hover-white no-underline">
+                {{- include.title -}}
             </span>
         </span>
         <div class="db flex-ns items-center pa3">
             <a class="f4 pv2 ph3 link dib {% if page.location_context == 'home' %}fw4 white-50{% else %}fw8 white{% endif %} "    href="{{ site.baseurl }}{% link index.html %}">Home</a>
-            <a class="f4 pv2 ph3 link dib {% if page.location_context == 'about' %}fw4 white-50{% else %}fw8 white{% endif %}"    href="{{ site.baseurl }}{% link about/index.html %}">About Me</a>
+            <a class="f4 pv2 ph3 link dib {% if page.location_context == 'about' %}fw4 white-50{% else %}fw8 white{% endif %}"    href="{{ site.baseurl }}{% link about/index.html %}">About</a>
             <a class="f4 pv2 ph3 link dib {% if page.location_context == 'projects' %}fw4 white-50{% else %}fw8 white{% endif %}" href="{{ site.baseurl }}{% link projects/index.html %}">Projects</a>
             <a class="f4 pv2 ph3 link dib {% if page.location_context == 'blog' %}fw4 white-50{% else %}fw8 white{% endif %}"     href="{{ site.baseurl }}{% link blog/index.html %}">Blog</a>
         </div>
