@@ -6,6 +6,8 @@ title: DWL Blog
 description: A container for all of my projects!
 url: https://slyboots.github.io
 github: [metadata]
+url: https://dakotalorance.com
+enforce_ssl: dakotalorance.com
 paginate: 5
 paginate_path: "/blog/page:num/"
 permalink: /blog/:year/:month/:day/:title
