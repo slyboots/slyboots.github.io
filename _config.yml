@@ -32,7 +32,6 @@ sass:
 
 plugins:
   - jekyll-feed
-<<<<<<< HEAD
   - jekyll-avatar
   - jekyll-sitemap
   - jekyll-paginate
@@ -42,8 +41,3 @@ kramdown:
   auto_ids:       false
   input:          kramdown
   entity_output:  symbolic
-=======
-  - jekyll-sitemap
-  - jekyll-paginate
-theme: jekyll-theme-cayman
->>>>>>> lots of changes

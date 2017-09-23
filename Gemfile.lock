@@ -215,14 +215,10 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages
-<<<<<<< HEAD
   jekyll-avatar
   jekyll-compose
   jekyll-feed
   jekyll-sitemap
-=======
-  minima
->>>>>>> lots of changes
 
 BUNDLED WITH
    1.16.0.pre.2
