@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+#**************************************************#
+#                   manage
+#                   written by dwl
+#
+#
+#          Functions for common operations
+#**************************************************#
+import os
+import argparse
+from collections import OrderedDict
+import yaml
+from argparse import ArgumentParser
+from pprint import pprint
+
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+GITHUB_URL = "https://github.com/slyboots/"
+IMAGE_DIR = os.path.join(PROJECT_ROOT, "assets/images")
+DATA_DIR = os.path.join(PROJECT_ROOT, "_data")
+PROJECTS_FILE = os.path.join(DATA_DIR, "projects.yml")
+
+#**************************************************#
+
+
+def project_ops(args):
+    pprint(args)
+    return
+    with open(PROJECTS_FILE) as pf:
+        current_projects = yaml.load(pf.read())
+    yaml.dump(current_projects, canonical=False,
+              default_flow_style=False, indent=2)
+    with open(PROJECTS_FILE, mode="a+") as pf:
+        name = args.name
+        desc = args.description
+        title = args.title
+        url = args.url
+        categories = ""
+        technology = ""
+        if args.category:
+            for cat in args.category:
+                categories = categories + f"\n    - {cat}"
+        if args.technology:
+            for tech in args.technology:
+                technology = technology + f"\n    - {tech}"
+        if not '/' in args.image:
+            image = os.path.join(IMAGE_DIR, args.image)
+        else:
+            image = args.image
+
+        new_project = f"""
+- name: {name}
+  id: {len(current_projects)}
+  description: {desc}
+  title: {title}
+  image: {image}
+  finished: False
+  url: {url}
+  technology:{technology}
+  categories:{categories}"""
+        pf.write(new_project)
+        # yaml.dump(new_project, pf, default_flow_style=False,
+        #           indent=2, canonical=False, line_break=True)
+
+
+# ARGPARSE CODE
+PARSER = ArgumentParser(prog="manage")
+SUBPARSERS = PARSER.add_subparsers(help="sub-command help")
+
+# Project commands
+PROJECT_PARSER = SUBPARSERS.add_parser(
+    'project', help="project management"
+)
+PROJECT_SUBPARSERS = PROJECT_PARSER.add_subparsers(
+    help="project sub-commands"
+)
+PROJECT_NEW_PARSER = PROJECT_SUBPARSERS.add_parser(
+    'new', help="add new project"
+)
+PROJECT_NEW_PARSER.add_argument(
+    "-n", "--name",
+    help="project name",
+)
+PROJECT_NEW_PARSER.add_argument(
+    "-d", "--description",
+    help="project summary",
+)
+PROJECT_NEW_PARSER.add_argument(
+    "-t", "--title",
+    help="project title",
+)
+PROJECT_NEW_PARSER.add_argument(
+    "-i", "--image",
+    help="project image",
+)
+PROJECT_NEW_PARSER.add_argument(
+    "-u", "--url",
+    help="project url",
+)
+PROJECT_NEW_PARSER.add_argument(
+    "-c", "--category",
+    action="append",
+    help="project name"
+)
+PROJECT_NEW_PARSER.add_argument(
+    "-y", "--technology",
+    action="append",
+    help="project tech used"
+)
+PROJECT_NEW_PARSER.set_defaults(func=project_ops)
+
+if __name__ == "__main__":
+    ARGS = PARSER.parse_args()
+    # try:
+    ARGS.func(ARGS)
+    # except AttributeError:
+    #     PARSER.print_help()
