@@ -34,3 +34,15 @@
     - webdev
     - dsp
     - javascript
+- name: bindui
+  id: 2
+  description: An exploration in to databinding
+  title: Bindui
+  image: assets/images/bindui.png
+  finished: False
+  url: http://dakotalorance.com/2-bindui
+  technology:
+    - 
+  categories:
+    - webdev
+    - javascript
