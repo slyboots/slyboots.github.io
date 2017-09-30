@@ -1,7 +1,7 @@
 ---
 layout: post
 title: noframeworkssuck
-date: 2017-09-10
+date: 2017-09-30
 imgurl: ../assets/images/No-Framework-Sucks.png
 alttxt: No Framework Sucks
 categories:
