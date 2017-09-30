@@ -39,7 +39,7 @@
   description: An exploration in to databinding
   title: Bindui
   image: assets/images/bindui.png
-  finished: False
+  finished: True
   url: http://dakotalorance.com/2-bindui
   technology:
     - 
