@@ -63,8 +63,8 @@
 - name: dummyimage-cli
   id: 3
   description: A cli for downloading images from dummyimage.com
-  title: Dummy Images!
-  image: assets/images/No-Framework-Sucks!.png
+  title: Dummy Images?
+  image: assets/images/Dummy-Image.png
   finished: False
   url: https://github.com/slyboots/4-dummyimage-cli
   technology:
