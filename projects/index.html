@@ -6,28 +6,26 @@ location_context: projects
 ---
 <h1 class="w-100">Finished: {{site.data.projects | where:"finished","true" | size}}</h1>
 {% for project in site.data.projects %}
-<div class="flex flex-auto w-100 w-25-l ph2-ns mb0 mb2-ns outline mh2-ns">
-    <div class="flex-auto pa4">
-        <div class="flex flex-auto items-end f4 f2-l fw7 mt0 pv3-l bb-l bb--black">
-                <span class="dn dib-ns">{{project.id}}:&nbsp;</span>
-                <span class="flex-auto"><a href="{{project.url}}" class="db link near-black">{{project.name}}</a></span>
-                <span class="flex dib-ns">
-                    {% if project.finished == true %}
-                        {% include dataicon.html icon="ei-check" size="m" class="green bg-green" %}
-                    {% else %}
-                        {% include dataicon.html icon="ei-exclamation" size="m" class="red bg-red" %}
-                    {% endif %}
-                </span>
-        </div>
-        <div class="flex flex-column flex-wrap items-center-ns lh-copy mt1 mt2-m mt3-l f6">
-                <span class="fw8 fw1-ns f3 f1-l db lh-title mb3 mb4-l">{{project.title}}</span>
-                <span class="fw8-ns db-l measure-wide">{{project.description}}</span>
-        </div>
-        <div class="flex flex-auto db-ns f6 fw7 lh-solid mb0 justify-start justify-end-ns">
-            {% for category in project.categories %}
-                <span class="flex dib f6 link dim br-pill ba bw1 ph1 pv1 mt3 dib dark-gray">{{category}} </span>
-            {% endfor %}
-        </div>
+<div class="flex flex-auto w-100 w-25-l ph2-ns mb0 mb2-ns outline mh2-ns pa4">
+    <div class="flex flex-auto items-end f4 f2-l fw7 mt0 pv3-l bb-l bb--black self-start">
+            <span class="dn dib-ns">{{project.id}}:&nbsp;</span>
+            <span class="flex-auto"><a href="{{project.url}}" class="db link near-black">{{project.name}}</a></span>
+            <span class="flex dib-ns">
+                {% if project.finished == true %}
+                    {% include dataicon.html icon="ei-check" size="m" class="green bg-green" %}
+                {% else %}
+                    {% include dataicon.html icon="ei-exclamation" size="m" class="red bg-red" %}
+                {% endif %}
+            </span>
+    </div>
+    <div class="flex flex-column flex-wrap items-center-ns lh-copy mt1 mt2-m mt3-l f6 self-center">
+            <span class="fw8 fw1-ns f3 f1-l db lh-title mb3 mb4-l">{{project.title}}</span>
+            <span class="fw8-ns db-l measure-wide">{{project.description}}</span>
+    </div>
+    <div class="flex flex-auto db-ns f6 fw7 lh-solid mb0 justify-start justify-end-ns self-end">
+        {% for category in project.categories %}
+            <span class="flex dib f6 link dim br-pill ba bw1 ph1 pv1 mt3 dib dark-gray">{{category}} </span>
+        {% endfor %}
     </div>
 </div>
 {% endfor %}
