@@ -6,7 +6,7 @@ location_context: projects
 ---
 <h1 class="w-100">Finished: {{site.data.projects | where:"finished","true" | size}}</h1>
 {% for project in site.data.projects %}
-<div class="flex flex-auto w-100 w-25-l ph2-ns mb0 mb2-ns outline mh2-ns pa4">
+<div class="flex flex-auto flex-row flex-wrap w-100 w-25-l pa4 ph4-ns mh2-ns  mb0 mb2-ns outline">
     <div class="flex flex-auto items-end f4 f2-l fw7 mt0 pv3-l bb-l bb--black self-start">
             <span class="dn dib-ns">{{project.id}}:&nbsp;</span>
             <span class="flex-auto"><a href="{{project.url}}" class="db link near-black">{{project.name}}</a></span>
