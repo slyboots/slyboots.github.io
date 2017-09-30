@@ -46,3 +46,30 @@
   categories:
     - webdev
     - javascript
+- name: tskeys
+  id: 3
+  description: A customizable keyboard control. Inspired by QwertyHancock
+  title: Web Audio Keyboard
+  image: ../assets/images/TSKeys.png
+  finished: False
+  url: https://github.com/slyboots/3-tskeys
+  technology:
+    - 
+  categories:
+    - typescript
+    - webdev
+    - webaudio
+    - ui
+- name: dummyimage-cli
+  id: 3
+  description: A cli for downloading images from dummyimage.com
+  title: Dummy Images!
+  image: assets/images/No-Framework-Sucks!.png
+  finished: False
+  url: https://github.com/slyboots/4-dummyimage-cli
+  technology:
+    - 
+  categories:
+    - python
+    - commandline
+    - utility
