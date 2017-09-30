@@ -1,7 +1,7 @@
 - name: slyboots.github.io
   id: 0
   description: A simple static website for sharing my projects and thoughts
-  title: The website you're on right now...
+  title: This website...
   image: assets/images/slyboots-website.png
   finished: true
   url: https://github.com/slyboots/slyboots.github.io
@@ -21,7 +21,7 @@
     - html
 - name: Simple Synth
   id: 1
-  description: A small single oscillator sync, with only 3 waveform options and a one octave pitch slider
+  description: A super simple synth
   title: It makes noise!
   image: assets/images/slyboots-website.png
   finished: true
@@ -36,7 +36,7 @@
     - javascript
 - name: bindui
   id: 2
-  description: An exploration in to databinding
+  description: Learning databinding
   title: Bindui
   image: assets/images/bindui.png
   finished: True
@@ -48,7 +48,7 @@
     - javascript
 - name: tskeys
   id: 3
-  description: A customizable keyboard control. Inspired by QwertyHancock
+  description: A customizable keyboard inspired by QwertyHancock
   title: Web Audio Keyboard
   image: ../assets/images/TSKeys.png
   finished: False
