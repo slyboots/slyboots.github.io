@@ -2,7 +2,7 @@
 title: DWL
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <title>{{ page.title }}</title>
     <meta charset="utf-8">
@@ -16,13 +16,13 @@ title: DWL
     <script src="https://cdn.jsdelivr.net/npm/evil-icons@1.9.0/assets/evil-icons.min.js"></script>
 </head>
 
-<body class="w-100 flex flex-row flex-wrap raleway">
+<body class="h-100 flex flex-row flex-wrap justify-between raleway">
     {% capture location %}{{ page.location_context }}{% endcapture %}
     {% include pagenav.html title=location %}
     <main class="flex flex-row flex-wrap w-100 w-80-ns pt2 center">
         {{ content }}
     </main>
-    <footer class="bg-near-black white-80 pv2 ph3 w-100 db bottom-0 static">
+    <footer class="self-end bg-near-black white-80 pv2 ph3 w-100 db">
         <span class="flex justify-between items-center">
             <span class="flex flex-auto mv3">
                 <strong class="tracked-tight">Dakota Wisdom Lorance</strong>
