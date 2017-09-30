@@ -73,3 +73,16 @@
     - python
     - commandline
     - utility
+- name: StencilComponent
+  id: 5
+  description: A web component made with stencil
+  title: Stencil..ly
+  image: assets/images/stencilcomponent.png
+  finished: False
+  url: https://github.com/slyboots/5-stencilcomponent
+  technology:
+    - 
+  categories:
+    - webcomponents
+    - webdev
+    - typescript
