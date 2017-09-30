@@ -65,7 +65,7 @@
   description: A cli for downloading images from dummyimage.com
   title: Dummy Images?
   image: assets/images/Dummy-Image.png
-  finished: False
+  finished: True
   url: https://github.com/slyboots/4-dummyimage-cli
   technology:
     - 
