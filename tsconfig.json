@@ -3,14 +3,13 @@
         "outDir": "./dist/",
         "sourceMap": true,
         "noImplicitAny": true,
-        "module": "es6",
+        "module": "commonjs",
         "target": "esnext",
         "jsx": "react",
         "lib": [
             "dom",
             "es2015",
-            "es2017",
-            "es6"
+            "es2017"
         ],
         "pretty": true,
         "allowJs": true,
