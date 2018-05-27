@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "target": "esnext",
+        "jsx": "react",
+        "lib": [
+            "dom",
+            "es2015",
+            "es2017"
+        ],
+        "pretty": true,
+        "strict": true
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "typeAcquisition": {
+        "enable": true
+    }
+}
