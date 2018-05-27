@@ -37,6 +37,10 @@ export default class extends React.Component<IndexPageProps, {}> {
           <br />
           <Link to="/counter/">1,2,3...</Link>
         </p>
+        <p>About CSS Modules.
+          <br />
+          <Link to="/about-css-modules/">Hint: They're cool!</Link>
+        </p>
         <div style={{ margin: '3rem auto', maxWidth: 600 }}>
           <h1>Richard Hamming on Luck</h1>
           <div>
