@@ -1,8 +1,12 @@
 import React from 'react';
 
-interface ContainerProps {
+export interface ContainerProps {
     children: any;
 }
-export default ({ children }: any) => (
-    <div style={{ margin: "3rem auto", maxWidth: 600 }}> {children} </div>
+export const Container = ({ children }: ContainerProps) => (
+    <div className="section">
+        <div className="container">
+            {children}
+        </div>
+    </div>
 );

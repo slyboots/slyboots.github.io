@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "gatsby-link";
 
+import { NavBar, NavBarItemProps, Footer } from '../components';
+
 interface ListLinkProps {
   to: string;
   children: any;
@@ -21,9 +23,9 @@ const ListLink = (props: ListLinkProps) =>
 
 const FooterLink = (props: FooterLinkProps) =>
   <li style={{ display: `inline-block`, marginRight: `.5rem` }} id={props.id}>
-    <Link to={props.to}>
+    <a href={props.to}>
       {props.children}
-    </Link>
+    </a>
   </li>
 
 
@@ -38,22 +40,29 @@ const SimpleFooter = (props: any) =>
     </div>
   </footer>
 
-export default ({ children }: any) => (
-  <div style={{ height: `100%`, margin: `0 auto`, maxWidth: 800, padding: 0 }}>
-    <header style={{ marginBottom: `1.5rem` }}>
-      <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
-        <h3 style={{ display: `inline` }}>MySweetSite</h3>
-      </Link>
-      <ul style={{ listStyle: `none`, float: `right` }}>
-        <ListLink to="/">Home</ListLink>
-        <ListLink to="/about/">About</ListLink>
-        <ListLink to="/contact/">Contact</ListLink>
-      </ul>
-    </header>
-    <div style={{ minHeight: `100%`, marginBottom: `-6rem` }}>
-      {children()}
-      <div id={`push`} style={{ height: `6rem` }}></div>
-    </div>
-    <SimpleFooter><em>"I may be a turkey dog, but at least I'm not a cow turtle!"<br /> ~Dakota Wisdom Lorance (2018)</em></SimpleFooter>
-  </div >
-);
+export default ({ children }: any) => {
+  const ghProfileName = "slyboots";
+  const ghProfileUrl = "https://github.com/slyboots/";
+  const email = "dlorwisdom@gmail.com";
+
+  const navlinks: NavBarItemProps[] = [
+    { url: "/about/", text: "About" },
+    { url: "/contact/", text: "Contact" }
+  ];
+  return (
+    <div className="container">
+      <NavBar startItems={navlinks} isDark={true}> </NavBar>
+      <section className="section">
+        <div className="container">
+          {children()}
+        </div>
+      </section>
+      <Footer
+        email={email}
+        profileUrl={ghProfileUrl}
+        profileText={ghProfileName}
+        content={(<em>"I may be a turkey dog, but at least I'm not a cow turtle!"<br /> ~Dakota Wisdom Lorance (2018)</em>)}>
+      </Footer>
+    </div >
+  )
+}
