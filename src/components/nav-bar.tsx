@@ -24,38 +24,37 @@ export const NavBarItem = (props: NavBarItemProps) => {
 }
 
 export const NavBar = (props: NavBarProps) => {
-    const hasBrandText = props.brandText ? true : false;
-    const hasBrandImg = props.brandImg ? true : false;
-    const hasEndItems = props.endItems ? true : false;
-    const startLinks = props.startItems;
-
     return (
-        <nav className={`navbar ${props.isDark ? "is-dark" : ""}`} role="navigation">
-            <div className="navbar-brand">
-                <Link to="/" className="navbar-item navbar-link">
-                    {
-                        props.brandText ? (props.brandText) :
-                            (props.brandImg ? <img src={props.brandImg} /> :
-                                'Home')
-                    }
-                </Link>
-            </div>
-            <div className="navbar-menu">
-                <div className="navbar-start">
-                    {
-                        startLinks.map((startitem: NavBarItemProps) =>
-                            <NavBarItem url={startitem.url} text={startitem.text} classes={startitem.classes} />
-                        )
-                    }
+        <nav className={`navbar is-fixed-top ${props.isDark ? "is-dark" : ""}`} role="navigation">
+            <div className="container">
+                <div className="navbar-brand">
+                    <Link to="/" className="navbar-item">
+                        {
+                            props.brandText ? (props.brandText) :
+                                (props.brandImg ? <img src={props.brandImg} /> :
+                                    'Home')
+                        }
+                    </Link>
                 </div>
-                <div className="navbar-end">
-                    {
-                        props.endItems ? props.endItems.map((enditem: NavBarItemProps) =>
-                            <NavBarItem url={enditem.url} text={enditem.text} classes={enditem.classes} />
-                        ) : null
-                    }
+                <div className="navbar-menu">
+                    <div className="navbar-start">
+                        {
+                            props.startItems ? props.startItems.map((startitem: NavBarItemProps) =>
+                                <NavBarItem url={startitem.url} text={startitem.text} classes={startitem.classes} />
+                            ) : null
+                        }
+                    </div>
+                    <div className="navbar-end">
+                        {
+                            props.endItems ? props.endItems.map((enditem: NavBarItemProps) =>
+                                <NavBarItem url={enditem.url} text={enditem.text} classes={enditem.classes} />
+                            ) : null
+                        }
+                    </div>
                 </div>
             </div>
         </nav>
     )
 }
+
+export default NavBar

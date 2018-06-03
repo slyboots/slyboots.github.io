@@ -1,12 +1,11 @@
 import React from 'react';
 
-export interface ContainerProps {
-    children: any;
-}
-export const Container = ({ children }: ContainerProps) => (
+export const Container = (props: any) => (
     <div className="section">
         <div className="container">
-            {children}
+            {props.children}
         </div>
     </div>
 );
+
+export default Container

@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "gatsby-link";
 
-interface HeroHeaderProps {
+export interface HeroHeaderProps {
     title: string;
     subtitle: string;
 }
 
 
-const HeroHeader = (props: any) =>
+export const HeroHeader = (props: any) =>
     <header className="hero">
         <div className="hero-body">
             <div className="container">
@@ -16,3 +16,5 @@ const HeroHeader = (props: any) =>
             </div>
         </div>
     </header>
+
+export default HeroHeader

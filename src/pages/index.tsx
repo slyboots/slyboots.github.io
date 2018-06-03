@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'gatsby-link';
-import styled from "styled-components";
 
 // Please note that you can use https://github.com/dotansimha/graphql-code-generator
 // to generate all types from graphQL schema
@@ -21,47 +20,11 @@ export default class extends React.Component<IndexPageProps, {}> {
   public render() {
     return (
       <div>
-        <h1>Dakota, like the states.</h1>
-        <p>
-          Welcome to your new <strong>{this.props.data.site.siteMetadata.title}</strong> site.
+        <h1 className="title is-1">Dakota</h1>
+        <h2 className="subtitle is-3">Like the states.</h2>
+        <p className="content">
+          Nothing fancy here. Just a simple site for hosting my projects and ideas.
         </p>
-        <p>Now go build something great.
-          <br />
-          <Link to="/page-2/">Go to page 2</Link>
-        </p>
-        <p>Or look at random images.
-          <br />
-          <Link to="/random-page/">Random Image</Link>
-        </p>
-        <p>And don't forget the counter.
-          <br />
-          <Link to="/counter/">1,2,3...</Link>
-        </p>
-        <p>About CSS Modules.
-          <br />
-          <Link to="/about-css-modules/">Hint: They're cool!</Link>
-        </p>
-        <h1>Hi! I'm building a fake Gatsby site as part of a tutorial!</h1>
-        <p>
-          What do I like to do? Lots of course but definitely enjoy building
-          websites.
-        </p>
-        <div style={{ margin: '3rem auto', maxWidth: 600 }}>
-          <h1>Richard Hamming on Luck</h1>
-          <div>
-            <p>
-              From Richard Hamming’s classic and must-read talk, “<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">You and Your Research</a>”.
-            </p>
-            <blockquote>
-              <p>
-                There is indeed an element of luck, and no, there isn’t. The prepared
-                mind sooner or later finds something important and does it. So yes, it is luck.{" "}
-                <em>The particular thing you do is luck, but that you do something is not.</em>
-              </p>
-            </blockquote>
-          </div>
-          <p>Posted April 09, 2011</p>
-        </div>
       </div>
     )
   }

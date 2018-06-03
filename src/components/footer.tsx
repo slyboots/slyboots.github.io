@@ -1,11 +1,10 @@
 import React from 'react';
 import Link from 'gatsby-link';
 
-interface FooterProps {
+export interface FooterProps {
     profileUrl: string;
     profileText: string;
     content: any;
-    email: string;
 }
 
 export const Footer = (props: FooterProps) => {
@@ -16,15 +15,13 @@ export const Footer = (props: FooterProps) => {
                     <p>
                         {props.content}
                     </p>
-                    <p>
-                        <strong>Website</strong> by <a href={props.profileUrl}>{props.profileText}</a>.
-                        The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
-                    </p>
-                    <p>
-                        <strong>Email</strong><a href={`mailto:${props.email}`}>{props.email}</a>
-                    </p>
+                    <small>
+                        <strong>Website</strong> by <a href={props.profileUrl}>{props.profileText}</a>. License: <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+                    </small>
                 </div>
             </div>
         </footer>
     )
 }
+
+export default Footer
