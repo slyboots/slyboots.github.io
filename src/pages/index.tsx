@@ -22,9 +22,10 @@ export default class extends React.Component<IndexPageProps, {}> {
       <div>
         <h1 className="title is-1">Dakota</h1>
         <h2 className="subtitle is-3">Like the states.</h2>
-        <p className="content">
-          Nothing fancy here. Just a simple site for hosting my projects and ideas.
-        </p>
+        <div className="content">
+          <p>Nothing fancy here. Just a simple site for hosting my projects and ideas.</p>
+          <p>Using bulma css framework because Dragon Ball Z nostalgia</p>
+        </div>
       </div>
     )
   }

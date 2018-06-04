@@ -1,8 +1,6 @@
 import React from 'react';
 import { Container } from '../components';
 
-// const styles = require('../styles/projects.module.css');
-// console.log(styles);
 
 interface RepoQueryResultEdge {
   node: {
