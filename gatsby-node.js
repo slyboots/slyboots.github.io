@@ -12,6 +12,5 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
             name: `pageName`,
             value: node.path.replace(/\W+/g, ' ').replace(/^\s+|\s+$/g, ''),
         })
-        console.log(node);
     }
 }

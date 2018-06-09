@@ -12,7 +12,7 @@ module.exports = {
       resolve: 'gatsby-source-github',
       options: {
         headers: {
-          Authorization: `Bearer ${process.env.GATSBY_GITHUB_ACCESS_TOKEN}`, // https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
+          Authorization: `Bearer ${process.env.GITHUB_GATSBY_PLUGIN_ACCESS_TOKEN}`, // https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
         },
         queries: [
           [`query($repoCount: Int) {
@@ -20,7 +20,7 @@ module.exports = {
                 name
                 bio
                 avatarUrl
-                repositories(affiliations: [OWNER], first: $repoCount) {
+                repositories(affiliations: [OWNER], first: $repoCount, orderBy: {field: CREATED_AT, direction: DESC}) {
                   totalCount
                   edges {
                     node {
@@ -32,7 +32,9 @@ module.exports = {
                       }
                       isArchived
                       isFork
-                      updatedAt
+                      id
+                      createdAt
+                      homepageUrl
                     }
                   }
                 }

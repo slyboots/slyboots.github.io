@@ -40,14 +40,14 @@ export const NavBar = (props: NavBarProps) => {
                     <div className="navbar-start">
                         {
                             props.startItems ? props.startItems.map((startitem: NavBarItemProps) =>
-                                <NavBarItem url={startitem.url} text={startitem.text} classes={startitem.classes} />
+                                <NavBarItem key={`start-${startitem.text}`} url={startitem.url} text={startitem.text} classes={startitem.classes} />
                             ) : null
                         }
                     </div>
                     <div className="navbar-end">
                         {
                             props.endItems ? props.endItems.map((enditem: NavBarItemProps) =>
-                                <NavBarItem url={enditem.url} text={enditem.text} classes={enditem.classes} />
+                                <NavBarItem key={`end-${enditem.text}`} url={enditem.url} text={enditem.text} classes={enditem.classes} />
                             ) : null
                         }
                     </div>
