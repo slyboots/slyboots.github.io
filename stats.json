@@ -1,8 +1,8 @@
 {
   "assetsByChunkName": {
     "component---src-layouts-index-tsx": [
-      "component---src-layouts-index-tsx-893e990aae259fb478e6.js",
-      "component---src-layouts-index-tsx-893e990aae259fb478e6.js.map"
+      "component---src-layouts-index-tsx-da027cff3a59139596bd.js",
+      "component---src-layouts-index-tsx-da027cff3a59139596bd.js.map"
     ],
     "component---src-pages-counter-tsx": [
       "component---src-pages-counter-tsx-00014335be1b398f049e.js",
@@ -21,8 +21,8 @@
       "component---src-pages-random-page-tsx-8b9216da4ad9d24f2926.js.map"
     ],
     "path---projects": [
-      "path---projects-4378611ad8ed37eacf8a.js",
-      "path---projects-4378611ad8ed37eacf8a.js.map"
+      "path---projects-a5f09a50ea9d6d718611.js",
+      "path---projects-a5f09a50ea9d6d718611.js.map"
     ],
     "path---index": [
       "path---index-f76831fd5dd1e08e3ff8.js",
@@ -53,8 +53,8 @@
       "component---src-pages-index-tsx-06556c3621bdb79049cf.js.map"
     ],
     "component---src-pages-projects-tsx": [
-      "component---src-pages-projects-tsx-973f23b3dcc1f186f0d8.js",
-      "component---src-pages-projects-tsx-973f23b3dcc1f186f0d8.js.map"
+      "component---src-pages-projects-tsx-179d7f881b2cd99fa5d7.js",
+      "component---src-pages-projects-tsx-179d7f881b2cd99fa5d7.js.map"
     ],
     "app": [
       "app-9860d3d89fd7638a7216.js",
