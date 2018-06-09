@@ -29,6 +29,8 @@ module.exports = class HTML extends React.Component {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=yes"
           />
+          <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+          <link rel='shortcut icon' type='image/png' href='/favicon.png' />
           {this.props.headComponents}
           {css}
           <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
