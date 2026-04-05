@@ -1,11 +1,585 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="viewport" content="width=device-width">
-<link rel="icon" type="image/ico" href="./favicon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link rel="icon" type="image/ico" href="./favicon.ico">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Bebas+Neue&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cell-size: 20px;
+      --dead: #ffffff;
+      --alive: #0a0a0a;
+      --grid-line: #e8e8e8;
+      --accent: #0a0a0a;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--dead);
+      cursor: crosshair;
+    }
+
+    #canvas {
+      display: block;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+    }
+
+    #hud {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    #name {
+      position: absolute;
+      top: 28px; left: 32px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(28px, 4vw, 52px);
+      letter-spacing: 0.08em;
+      color: var(--alive);
+      line-height: 1;
+      mix-blend-mode: multiply;
+    }
+
+    #role {
+      position: absolute;
+      top: calc(28px + clamp(28px, 4vw, 52px) + 6px);
+      left: 34px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    #nav {
+      position: absolute;
+      top: 32px; right: 32px;
+      display: flex;
+      gap: 28px;
+      pointer-events: all;
+    }
+
+    #nav a {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #aaa;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    #nav a:hover { color: var(--alive); }
+
+    #nav-toggle {
+      display: none;
+      background: none;
+      border: 1px solid #d0d0d0;
+      cursor: pointer;
+      padding: 7px 9px;
+      flex-direction: column;
+      gap: 4px;
+      pointer-events: all;
+      z-index: 100;
+      position: relative;
+    }
+
+    #nav-toggle span {
+      display: block;
+      width: 18px; height: 1.5px;
+      background: #666;
+      transition: transform 0.25s, opacity 0.25s;
+      transform-origin: center;
+    }
+
+    #nav-toggle.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+    #nav-toggle.open span:nth-child(2) { opacity: 0; }
+    #nav-toggle.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+    #nav-drawer {
+      display: none;
+      position: absolute;
+      top: 0; right: 0;
+      width: 100vw;
+      background: #00000044;
+      backdrop-filter: blur(8px);
+      flex-direction: column;
+      align-items: flex-end;
+      padding: 80px 32px 36px;
+      gap: 24px;
+      pointer-events: all;
+      transform: translateY(-100%);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    #nav-drawer.open {
+      transform: translateY(0);
+    }
+
+    #nav-drawer a {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #555;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    #nav-drawer a:hover { color: var(--alive); }
+
+    #status {
+      position: absolute;
+      bottom: 28px; left: 32px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: #bbb;
+      text-transform: uppercase;
+    }
+
+    #gen {
+      position: absolute;
+      bottom: 28px; right: 32px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: #bbb;
+      text-transform: uppercase;
+    }
+
+    #controls {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+      pointer-events: all;
+    }
+
+    .ctrl-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: none;
+      border: 1px solid #d0d0d0;
+      color: #aaa;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .ctrl-btn:hover {
+      border-color: var(--alive);
+      color: var(--alive);
+    }
+
+    .ctrl-btn.active {
+      background: var(--alive);
+      color: var(--dead);
+      border-color: var(--alive);
+    }
+
+    #fab-wrap {
+      display: none; /* shown via media query */
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      pointer-events: all;
+      z-index: 20;
+    }
+
+    #fab-tray {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    #fab-tray.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .fab-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .fab-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #666;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid #e0e0e0;
+      padding: 4px 10px;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+
+    .fab-action {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid #d0d0d0;
+      background: #fff;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .fab-action svg { width: 16px; height: 16px; stroke: #888; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .fab-action:hover { border-color: var(--alive); background: #f5f5f5; }
+    .fab-action.active { background: var(--alive); border-color: var(--alive); }
+    .fab-action.active svg { stroke: #fff; }
+
+    #fab-main {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1.5px solid #c0c0c0;
+      background: #fff;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    #fab-main svg { width: 18px; height: 18px; stroke: #555; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s; }
+    #fab-main.open { border-color: var(--alive); box-shadow: 0 2px 16px rgba(0,0,0,0.13); }
+    #fab-main.open svg { transform: rotate(45deg); }
+
+    @media (max-width: 600px) {
+      #nav-links { display: none; }
+      #nav-toggle { display: flex; }
+      #nav-drawer { display: flex; }
+
+      #controls { display: none; }
+      #fab-wrap  { display: flex; }
+
+      #status { display: none; }
+
+      #gen { right: 50%; transform: translateX(50%); bottom: 90px; }
+    }
+  </style>
 </head>
-
 <body>
-</body>
 
+<canvas id="canvas"></canvas>
+
+<div id="hud">
+  <div id="name">Your Name</div>
+  <div id="role">Designer &amp; Developer</div>
+
+  <nav id="nav">
+    <button id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div id="nav-links">
+      <a href="#">Work</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <div id="nav-drawer" aria-hidden="true">
+    <a href="#">Work</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+
+  <div id="status">Click to draw &nbsp;·&nbsp; Space to pause</div>
+  <div id="gen">Gen <span id="gen-count">0</span></div>
+
+  <div id="controls">
+    <button class="ctrl-btn" id="btn-clear">Clear</button>
+    <button class="ctrl-btn" id="btn-random">Random</button>
+    <button class="ctrl-btn active" id="btn-pause">Running</button>
+  </div>
+
+  <div id="fab-wrap">
+    <div id="fab-tray">
+      <div class="fab-item">
+        <span class="fab-label">Clear</span>
+        <button class="fab-action" id="fab-clear" aria-label="Clear">
+          <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+        </button>
+      </div>
+      <div class="fab-item">
+        <span class="fab-label">Random</span>
+        <button class="fab-action" id="fab-random" aria-label="Random">
+          <svg viewBox="0 0 24 24"><path d="M18 4l3 3-3 3M6 7h15M6 20l-3-3 3-3M18 17H3M7 4l-3 3 3 3"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
+        </button>
+      </div>
+      <div class="fab-item">
+        <span class="fab-label" id="fab-pause-label">Running</span>
+        <button class="fab-action active" id="fab-pause" aria-label="Pause">
+          <svg id="fab-pause-icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <button id="fab-main" aria-label="Controls">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx    = canvas.getContext('2d');
+  const CELL   = 20;
+  const INTERVAL = 2000; // ms
+
+  let cols, rows, grid, nextGrid;
+  let generation = 0;
+  let running = true;
+  let tickTimer = null;
+  let isDrawing = false;
+  let drawValue = 1;
+
+  function makeGrid() {
+    return Array.from({ length: rows }, () => new Uint8Array(cols));
+  }
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const newCols = Math.ceil(canvas.width  / CELL);
+    const newRows = Math.ceil(canvas.height / CELL);
+
+    const oldGrid = grid;
+    const oldCols = cols;
+    const oldRows = rows;
+
+    cols = newCols;
+    rows = newRows;
+    grid = makeGrid();
+    nextGrid = makeGrid();
+
+    if (oldGrid) {
+      const minR = Math.min(rows, oldRows);
+      const minC = Math.min(cols, oldCols);
+      for (let r = 0; r < minR; r++)
+        for (let c = 0; c < minC; c++)
+          grid[r][c] = oldGrid[r][c];
+    }
+
+    render();
+  }
+  function neighbours(r, c) {
+    let n = 0;
+    for (let dr = -1; dr <= 1; dr++)
+      for (let dc = -1; dc <= 1; dc++) {
+        if (dr === 0 && dc === 0) continue;
+        const nr = (r + dr + rows) % rows;
+        const nc = (c + dc + cols) % cols;
+        n += grid[nr][nc];
+      }
+    return n;
+  }
+
+  function tick() {
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const alive = grid[r][c];
+        const n     = neighbours(r, c);
+        nextGrid[r][c] =
+          alive ? (n === 2 || n === 3 ? 1 : 0)
+                : (n === 3 ? 1 : 0);
+      }
+    }
+    [grid, nextGrid] = [nextGrid, grid];
+    generation++;
+    document.getElementById('gen-count').textContent = generation;
+    render();
+  }
+
+  function startTimer() {
+    clearInterval(tickTimer);
+    tickTimer = setInterval(() => { if (running) tick(); }, INTERVAL);
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.strokeStyle = '#e8e8e8';
+    ctx.lineWidth   = 0.5;
+
+    for (let c = 0; c <= cols; c++) {
+      ctx.beginPath();
+      ctx.moveTo(c * CELL, 0);
+      ctx.lineTo(c * CELL, canvas.height);
+      ctx.stroke();
+    }
+    for (let r = 0; r <= rows; r++) {
+      ctx.beginPath();
+      ctx.moveTo(0, r * CELL);
+      ctx.lineTo(canvas.width, r * CELL);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = '#0a0a0a';
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        if (grid[r][c])
+          ctx.fillRect(c * CELL + 0.5, r * CELL + 0.5, CELL - 1, CELL - 1);
+  }
+  function cellAt(x, y) {
+    return {
+      c: Math.floor(x / CELL),
+      r: Math.floor(y / CELL),
+    };
+  }
+
+  function paintAt(x, y) {
+    const { r, c } = cellAt(x, y);
+    if (r >= 0 && r < rows && c >= 0 && c < cols) {
+      grid[r][c] = drawValue;
+      render();
+    }
+  }
+
+  canvas.addEventListener('mousedown', e => {
+    const { r, c } = cellAt(e.clientX, e.clientY);
+    drawValue = grid[r][c] ? 0 : 1;
+    isDrawing = true;
+    paintAt(e.clientX, e.clientY);
+  });
+
+  canvas.addEventListener('mousemove', e => {
+    if (!isDrawing) return;
+    paintAt(e.clientX, e.clientY);
+  });
+
+  window.addEventListener('mouseup', () => { isDrawing = false; });
+
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    const t = e.touches[0];
+    const { r, c } = cellAt(t.clientX, t.clientY);
+    drawValue = grid[r][c] ? 0 : 1;
+    isDrawing = true;
+    paintAt(t.clientX, t.clientY);
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const t = e.touches[0];
+    paintAt(t.clientX, t.clientY);
+  }, { passive: false });
+
+  window.addEventListener('touchend', () => { isDrawing = false; });
+  window.addEventListener('keydown', e => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      togglePause();
+    }
+  });
+  const btnPause  = document.getElementById('btn-pause');
+  const btnClear  = document.getElementById('btn-clear');
+  const btnRandom = document.getElementById('btn-random');
+
+  function togglePause() {
+    running = !running;
+    btnPause.textContent = running ? 'Running' : 'Paused';
+    btnPause.classList.toggle('active', running);
+    const fabPauseLabel = document.getElementById('fab-pause-label');
+    const fabPauseBtn   = document.getElementById('fab-pause');
+    const fabPauseIcon  = document.getElementById('fab-pause-icon');
+    fabPauseLabel.textContent = running ? 'Running' : 'Paused';
+    fabPauseBtn.classList.toggle('active', running);
+    fabPauseIcon.innerHTML = running
+      ? '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>'
+      : '<polygon points="5,3 19,12 5,21"/>';
+  }
+  function doClear() {
+    grid = makeGrid();
+    nextGrid = makeGrid();
+    generation = 0;
+    document.getElementById('gen-count').textContent = 0;
+    render();
+  }
+
+  function doRandom() {
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        grid[r][c] = Math.random() < 0.25 ? 1 : 0;
+    generation = 0;
+    document.getElementById('gen-count').textContent = 0;
+    render();
+  }
+
+  btnPause.addEventListener('click',  togglePause);
+  btnClear.addEventListener('click',  doClear);
+  btnRandom.addEventListener('click', doRandom);
+
+  const fabMain  = document.getElementById('fab-main');
+  const fabTray  = document.getElementById('fab-tray');
+
+  function closeNav() {
+    navDrawer.classList.remove('open');
+    navToggle.classList.remove('open');
+    navDrawer.setAttribute('aria-hidden', 'true');
+  }
+
+  fabMain.addEventListener('click', () => {
+    closeNav();
+    const open = fabTray.classList.toggle('open');
+    fabMain.classList.toggle('open', open);
+  });
+
+  document.getElementById('fab-clear').addEventListener('click', () => { doClear(); closeFab(); });
+  document.getElementById('fab-random').addEventListener('click', () => { doRandom(); closeFab(); });
+  document.getElementById('fab-pause').addEventListener('click', () => { togglePause(); });
+
+  function closeFab() {
+    fabTray.classList.remove('open');
+    fabMain.classList.remove('open');
+  }
+
+  const navToggle = document.getElementById('nav-toggle');
+  const navDrawer = document.getElementById('nav-drawer');
+
+  navToggle.addEventListener('click', () => {
+    const open = navDrawer.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navDrawer.setAttribute('aria-hidden', String(!open));
+    closeFab();
+  });
+
+  navDrawer.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      closeNav();
+    });
+  });
+
+  window.addEventListener('resize', resize);
+  resize();
+  startTimer();
+</script>
+</body>
 </html>
