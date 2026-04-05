@@ -376,267 +376,299 @@ html, body {
     {"label": "Networking","href": "https://www.linkedin.com/in/dakota-wisdom-lorance"}
   ],
   "cellSize":        20,
-  "tickInterval":    2000,
+  "tickInterval":    1500,
   "randomFillRatio": 0.25
 }
 </script>
-
 <script>
-  const CONFIG = JSON.parse(document.getElementById('config').textContent);
+    (() => {
+        const $ = (id) => document.getElementById(id);
+        const cfg = JSON.parse($("config").textContent);
 
-  document.title = CONFIG.pageTitle;
-  document.getElementById('name').textContent = CONFIG.name;
-  document.getElementById('role').innerHTML   = CONFIG.role;
+        document.title = cfg.pageTitle;
+        $("name").textContent = cfg.name;
+        $("role").textContent = cfg.role;
 
-  const navLinksEl  = document.getElementById('nav-links');
-  const navDrawer   = document.getElementById('nav-drawer');
-  CONFIG.nav.forEach(item => {
-    [navLinksEl, navDrawer].forEach(container => {
-      const a = document.createElement('a');
-      a.href        = item.href;
-      a.textContent = item.label;
-      container.appendChild(a);
-    });
-  });
+        // Build nav + drawer links
+        const navLinks = $("nav-links");
+        const navDrawer = $("nav-drawer");
+        cfg.nav.forEach(({ label, href }) => {
+            const a1 = document.createElement("a");
+            a1.href = href;
+            a1.textContent = label;
+            navLinks.appendChild(a1);
 
-  const canvas = document.getElementById('canvas');
-  const ctx    = canvas.getContext('2d');
-  const CELL     = CONFIG.cellSize;
-  const INTERVAL = CONFIG.tickInterval;
+            const a2 = document.createElement("a");
+            a2.href = href;
+            a2.textContent = label;
+            navDrawer.appendChild(a2);
+        });
 
-  const btnPause      = document.getElementById('btn-pause');
-  const btnClear      = document.getElementById('btn-clear');
-  const btnRandom     = document.getElementById('btn-random');
-  const genCountEl    = document.getElementById('gen-count');
-  const fabPauseBtn   = document.getElementById('fab-pause');
-  const fabPauseIcon  = document.getElementById('fab-pause-icon');
-  const fabPauseLabel = document.getElementById('fab-pause-label');
-  const fabMain       = document.getElementById('fab-main');
-  const fabTray       = document.getElementById('fab-tray');
-  const navToggle     = document.getElementById('nav-toggle');
+        const canvas = $("canvas");
+        const ctx = canvas.getContext("2d");
 
-  let cols, rows, grid, nextGrid;
-  let generation = 0;
-  let running = true;
-  let tickTimer = null;
-  let isDrawing = false;
-  let drawValue = 1;
+        const btnPause = $("btn-pause");
+        const btnClear = $("btn-clear");
+        const btnRandom = $("btn-random");
+        const genEl = $("gen-count");
 
-  function makeGrid() {
-    return Array.from({ length: rows }, () => new Uint8Array(cols));
-  }
+        const fabMain = $("fab-main");
+        const fabTray = $("fab-tray");
+        const fabPauseBtn = $("fab-pause");
+        const fabPauseLabel = $("fab-pause-label");
+        const fabPauseIcon = $("fab-pause-icon");
 
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
+        const navToggle = $("nav-toggle");
 
-    const prevGrid = grid;
-    const prevCols = cols;
-    const prevRows = rows;
+        const CELL = cfg.cellSize || 20;
+        const TICK_MS = cfg.tickInterval || 2000;
+        const FILL = cfg.randomFillRatio ?? 0.25;
 
-    cols = Math.ceil(canvas.width  / CELL);
-    rows = Math.ceil(canvas.height / CELL);
-    grid = makeGrid();
-    nextGrid = makeGrid();
+        let cols = 0;
+        let rows = 0;
+        let grid = [];
+        let next = [];
+        let generation = 0;
+        let running = true;
+        let timer = null;
 
-    if (prevGrid) {
-      const minR = Math.min(rows, prevRows);
-      const minC = Math.min(cols, prevCols);
-      for (let r = 0; r < minR; r++)
-        for (let c = 0; c < minC; c++)
-          grid[r][c] = prevGrid[r][c];
-    }
+        let drawing = false;
+        let drawValue = 1;
 
-    render();
-  }
+        canvas.style.touchAction = "none"; // pointer events work on mobile without scrolling the page
 
-  function neighbours(r, c) {
-    let n = 0;
-    for (let dr = -1; dr <= 1; dr++)
-      for (let dc = -1; dc <= 1; dc++) {
-        if (dr === 0 && dc === 0) continue;
-        // + rows/cols before % prevents negative results from JS's % operator
-        const nr = (r + dr + rows) % rows;
-        const nc = (c + dc + cols) % cols;
-        n += grid[nr][nc];
-      }
-    return n;
-  }
+        function newGrid() {
+            return Array.from({ length: rows }, () => new Uint8Array(cols));
+        }
 
-  function tick() {
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const alive = grid[r][c];
-        const n     = neighbours(r, c);
-        nextGrid[r][c] =
-          alive ? (n === 2 || n === 3 ? 1 : 0)
-                : (n === 3 ? 1 : 0);
-      }
-    }
-    [grid, nextGrid] = [nextGrid, grid];
-    generation++;
-    genCountEl.textContent = generation;
-    render();
-  }
+        function resize() {
+            const old = grid;
+            const oldRows = rows;
+            const oldCols = cols;
 
-  function startTimer() {
-    clearInterval(tickTimer);
-    tickTimer = setInterval(() => { if (running) tick(); }, INTERVAL);
-  }
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
-  function render() {
-    const style    = getComputedStyle(document.documentElement);
-    const gridLine = style.getPropertyValue('--grid-line').trim();
-    const alive    = style.getPropertyValue('--alive').trim();
+            cols = Math.ceil(canvas.width / CELL);
+            rows = Math.ceil(canvas.height / CELL);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+            grid = newGrid();
+            next = newGrid();
 
-    ctx.strokeStyle = gridLine;
-    ctx.lineWidth   = 0.5;
+            if (old.length) {
+                const rr = Math.min(rows, oldRows);
+                const cc = Math.min(cols, oldCols);
+                for (let r = 0; r < rr; r++) {
+                    for (let c = 0; c < cc; c++) {
+                        grid[r][c] = old[r][c];
+                    }
+                }
+            }
 
-    ctx.beginPath();
-    for (let c = 0; c <= cols; c++) {
-      ctx.moveTo(c * CELL, 0);
-      ctx.lineTo(c * CELL, canvas.height);
-    }
-    for (let r = 0; r <= rows; r++) {
-      ctx.moveTo(0, r * CELL);
-      ctx.lineTo(canvas.width, r * CELL);
-    }
-    ctx.stroke();
+            draw();
+        }
 
-    ctx.fillStyle = alive;
-    for (let r = 0; r < rows; r++)
-      for (let c = 0; c < cols; c++)
-        if (grid[r][c])
-          ctx.fillRect(c * CELL + 0.5, r * CELL + 0.5, CELL - 1, CELL - 1);
-  }
+        function neighbors(r, c) {
+            let n = 0;
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    const rr = (r + dr + rows) % rows;
+                    const cc = (c + dc + cols) % cols;
+                    n += grid[rr][cc];
+                }
+            }
+            return n;
+        }
 
-  function cellAt(x, y) {
-    return {
-      c: Math.floor(x / CELL),
-      r: Math.floor(y / CELL),
-    };
-  }
+        function tick() {
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const alive = grid[r][c] === 1;
+                    const n = neighbors(r, c);
+                    next[r][c] = alive ? (n === 2 || n === 3 ? 1 : 0) : (n === 3 ? 1 : 0);
+                }
+            }
 
-  function paintAt(x, y) {
-    const { r, c } = cellAt(x, y);
-    if (r >= 0 && r < rows && c >= 0 && c < cols) {
-      grid[r][c] = drawValue;
-      render();
-    }
-  }
+            const tmp = grid;
+            grid = next;
+            next = tmp;
 
-  canvas.addEventListener('mousedown', e => {
-    const { r, c } = cellAt(e.clientX, e.clientY);
-    drawValue = grid[r][c] ? 0 : 1;
-    isDrawing = true;
-    paintAt(e.clientX, e.clientY);
-  });
+            generation++;
+            genEl.textContent = String(generation);
+            draw();
+        }
 
-  canvas.addEventListener('mousemove', e => {
-    if (!isDrawing) return;
-    paintAt(e.clientX, e.clientY);
-  });
+        function startLoop() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                if (running) tick();
+            }, TICK_MS);
+        }
 
-  window.addEventListener('mouseup', () => { isDrawing = false; });
+        function draw() {
+            const css = getComputedStyle(document.documentElement);
+            const gridLine = css.getPropertyValue("--grid-line").trim();
+            const aliveColor = css.getPropertyValue("--alive").trim();
 
-  canvas.addEventListener('touchstart', e => {
-    e.preventDefault();
-    const t = e.touches[0];
-    const { r, c } = cellAt(t.clientX, t.clientY);
-    drawValue = grid[r][c] ? 0 : 1;
-    isDrawing = true;
-    paintAt(t.clientX, t.clientY);
-  }, { passive: false });
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  canvas.addEventListener('touchmove', e => {
-    e.preventDefault();
-    const t = e.touches[0];
-    paintAt(t.clientX, t.clientY);
-  }, { passive: false });
+            // grid lines
+            ctx.strokeStyle = gridLine;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            for (let c = 0; c <= cols; c++) {
+                const x = c * CELL;
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+            }
+            for (let r = 0; r <= rows; r++) {
+                const y = r * CELL;
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+            }
+            ctx.stroke();
 
-  window.addEventListener('touchend', () => { isDrawing = false; });
+            // live cells
+            ctx.fillStyle = aliveColor;
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    if (!grid[r][c]) continue;
+                    ctx.fillRect(c * CELL + 0.5, r * CELL + 0.5, CELL - 1, CELL - 1);
+                }
+            }
+        }
 
-  window.addEventListener('keydown', e => {
-    if (e.code === 'Space') {
-      e.preventDefault();
-      togglePause();
-    }
-  });
+        function xyToCell(x, y) {
+            return {
+                r: Math.floor(y / CELL),
+                c: Math.floor(x / CELL),
+            };
+        }
 
-  function resetGeneration() {
-    generation = 0;
-    genCountEl.textContent = 0;
-  }
+        function paint(x, y) {
+            const { r, c } = xyToCell(x, y);
+            if (r < 0 || r >= rows || c < 0 || c >= cols) return;
+            grid[r][c] = drawValue;
+            draw();
+        }
 
-  function togglePause() {
-    running = !running;
-    const label = running ? 'Running' : 'Paused';
-    btnPause.textContent = label;
-    btnPause.classList.toggle('active', running);
-    fabPauseLabel.textContent = label;
-    fabPauseBtn.classList.toggle('active', running);
-    fabPauseIcon.innerHTML = running
-      ? '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>'
-      : '<polygon points="5,3 19,12 5,21"/>';
-  }
+        function setRunning(on) {
+            running = on;
+            const label = running ? "Running" : "Paused";
 
-  function doClear() {
-    grid = makeGrid();
-    nextGrid = makeGrid();
-    resetGeneration();
-    render();
-  }
+            btnPause.textContent = label;
+            btnPause.classList.toggle("active", running);
 
-  function doRandom() {
-    for (let r = 0; r < rows; r++)
-      for (let c = 0; c < cols; c++)
-        grid[r][c] = Math.random() < CONFIG.randomFillRatio ? 1 : 0;
-    resetGeneration();
-    render();
-  }
+            fabPauseLabel.textContent = label;
+            fabPauseBtn.classList.toggle("active", running);
 
-  btnPause.addEventListener('click',  togglePause);
-  btnClear.addEventListener('click',  doClear);
-  btnRandom.addEventListener('click', doRandom);
+            fabPauseIcon.innerHTML = running
+                ? '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>'
+                : '<polygon points="5,3 19,12 5,21"/>';
+        }
 
-  function closeFab() {
-    fabTray.classList.remove('open');
-    fabMain.classList.remove('open');
-  }
+        function togglePause() {
+            setRunning(!running);
+        }
 
-  function closeNav() {
-    navDrawer.classList.remove('open');
-    navToggle.classList.remove('open');
-    navDrawer.setAttribute('aria-hidden', 'true');
-  }
+        function resetGen() {
+            generation = 0;
+            genEl.textContent = "0";
+        }
 
-  fabMain.addEventListener('click', () => {
-    closeNav();
-    const open = fabTray.classList.toggle('open');
-    fabMain.classList.toggle('open', open);
-  });
+        function clearAll() {
+            grid = newGrid();
+            next = newGrid();
+            resetGen();
+            draw();
+        }
 
-  document.getElementById('fab-clear').addEventListener('click',  () => { doClear();    closeFab(); });
-  document.getElementById('fab-random').addEventListener('click', () => { doRandom();   closeFab(); });
-  document.getElementById('fab-pause').addEventListener('click',  togglePause);
+        function randomize() {
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    grid[r][c] = Math.random() < FILL ? 1 : 0;
+                }
+            }
+            resetGen();
+            draw();
+        }
 
-  navToggle.addEventListener('click', () => {
-    const open = navDrawer.classList.toggle('open');
-    navToggle.classList.toggle('open', open);
-    navDrawer.setAttribute('aria-hidden', String(!open));
-    closeFab();
-  });
+        function closeFab() {
+            fabTray.classList.remove("open");
+            fabMain.classList.remove("open");
+        }
 
-  navDrawer.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', closeNav);
-  });
+        function closeNav() {
+            navDrawer.classList.remove("open");
+            navToggle.classList.remove("open");
+            navDrawer.setAttribute("aria-hidden", "true");
+        }
 
-  window.addEventListener('resize', resize);
-  resize();
-  startTimer();
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', render);
+        // Pointer drawing (mouse + touch)
+        canvas.addEventListener("pointerdown", (e) => {
+            const { r, c } = xyToCell(e.clientX, e.clientY);
+            if (r < 0 || r >= rows || c < 0 || c >= cols) return;
+            drawValue = grid[r][c] ? 0 : 1;
+            drawing = true;
+            paint(e.clientX, e.clientY);
+        });
+
+        canvas.addEventListener("pointermove", (e) => {
+            if (!drawing) return;
+            paint(e.clientX, e.clientY);
+        });
+
+        window.addEventListener("pointerup", () => {
+            drawing = false;
+        });
+
+        window.addEventListener("keydown", (e) => {
+            if (e.code !== "Space") return;
+            e.preventDefault();
+            togglePause();
+        });
+
+        btnPause.addEventListener("click", togglePause);
+        btnClear.addEventListener("click", clearAll);
+        btnRandom.addEventListener("click", randomize);
+
+        $("fab-clear").addEventListener("click", () => {
+            clearAll();
+            closeFab();
+        });
+
+        $("fab-random").addEventListener("click", () => {
+            randomize();
+            closeFab();
+        });
+
+        $("fab-pause").addEventListener("click", togglePause);
+
+        fabMain.addEventListener("click", () => {
+            closeNav();
+            const open = fabTray.classList.toggle("open");
+            fabMain.classList.toggle("open", open);
+        });
+
+        navToggle.addEventListener("click", () => {
+            const open = navDrawer.classList.toggle("open");
+            navToggle.classList.toggle("open", open);
+            navDrawer.setAttribute("aria-hidden", String(!open));
+            closeFab();
+        });
+
+        navDrawer.querySelectorAll("a").forEach((a) => {
+            a.addEventListener("click", closeNav);
+        });
+
+        window.addEventListener("resize", resize);
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
+
+        resize();
+        startLoop();
+        setRunning(true);
+    })();
 </script>
 
 </body>
