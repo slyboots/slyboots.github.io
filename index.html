@@ -86,6 +86,11 @@ html, body {
 
 #nav a:hover { color: var(--alive); }
 
+#nav a:not(:first-child)::before {
+    content: "•";
+    padding: 0 14px;
+}
+
 #nav-toggle {
   display: none;
   background: none;
