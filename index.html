@@ -192,7 +192,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  pointer-events: auto;
+  pointer-events: none;
   z-index: 20;
 }
 
@@ -230,6 +230,7 @@ html, body {
   padding: 4px 10px;
   white-space: nowrap;
   backdrop-filter: blur(4px);
+  pointer-events: auto;
 }
 
 .fab-btn {
@@ -241,6 +242,7 @@ html, body {
   align-items: center;
   justify-content: center;
   transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+  pointer-events: auto;
 }
 
 .fab-btn svg {
@@ -339,20 +341,20 @@ html, body {
   <div id="fab-wrap">
     <div id="fab-tray">
       <div class="fab-item">
-        <span class="fab-label">Clear</span>
-        <button class="fab-btn fab-action" id="fab-clear" aria-label="Clear">
+        <span id="label-clr" class="fab-label">Clear</span>
+        <button class="fab-btn fab-action" id="fab-clear" aria-labeledby="label-clr">
           <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
         </button>
       </div>
       <div class="fab-item">
-        <span class="fab-label">Random</span>
-        <button class="fab-btn fab-action" id="fab-random" aria-label="Random">
+        <span id="label-rnd" class="fab-label">Random</span>
+        <button class="fab-btn fab-action" id="fab-random" aria-labeledby="label-rnd">
           <svg viewBox="0 0 24 24"><path d="M18 4l3 3-3 3M6 7h15M6 20l-3-3 3-3M18 17H3M7 4l-3 3 3 3"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
         </button>
       </div>
       <div class="fab-item">
-        <span class="fab-label" id="fab-pause-label">Running</span>
-        <button class="fab-btn fab-action active" id="fab-pause" aria-label="Pause">
+        <span id="label-run" class="fab-label" id="fab-pause-label">Running</span>
+        <button class="fab-btn fab-action active" id="fab-pause" aria-labeledby="label-run">
           <svg id="fab-pause-icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
         </button>
       </div>
