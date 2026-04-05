@@ -80,16 +80,25 @@ html, body {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   /* The magic: smooth HSL hue cycling */
-  animation: rgb-cycle 1.2s linear infinite;
+  animation: rgb-cycle 8s linear infinite;
   /* Extra obnoxious gamer glow */
   text-shadow: 
     0 0 10px currentColor,
     0 0 20px currentColor,
-    0 0 40px currentColor,
-    0 0 80px currentColor;
+    0 0 40px currentColor;
   /* color: #aaa;
   text-decoration: none;
   transition: color 0.2s; */
+}
+@keyframes rgb-cycle {
+  0%   { color: hsl(0,   100%, 50%); }
+  14%   { color: hsl(52,   100%, 50%); }
+  28%   { color: hsl(104,   100%, 50%); }
+  42%   { color: hsl(156,   100%, 50%); }
+  56%   { color: hsl(208,   100%, 50%); }
+  70%   { color: hsl(260,   100%, 50%); }
+  85%   { color: hsl(312,   100%, 50%); }
+  100% { color: hsl(360, 100%, 50%); }
 }
 
 #nav a:hover { color: var(--alive); }
@@ -327,11 +336,6 @@ html, body {
   #fab-main { border-color: #404040; box-shadow: 0 2px 12px rgba(0,0,0,0.4); }
   #fab-main svg { stroke: #999; }
   #fab-main.open { box-shadow: 0 2px 16px rgba(0,0,0,0.5); }
-}
-
-@keyframes rgb-cycle {
-  0%   { color: hsl(0,   100%, 50%); }
-  100% { color: hsl(360, 100%, 50%); }
 }
   </style>
 </head>
