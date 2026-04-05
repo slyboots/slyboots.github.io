@@ -79,9 +79,17 @@ html, body {
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #aaa;
+  /* The magic: smooth HSL hue cycling */
+  animation: rgb-cycle 1.2s linear infinite;
+  /* Extra obnoxious gamer glow */
+  text-shadow: 
+    0 0 10px currentColor,
+    0 0 20px currentColor,
+    0 0 40px currentColor,
+    0 0 80px currentColor;
+  /* color: #aaa;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.2s; */
 }
 
 #nav a:hover { color: var(--alive); }
@@ -306,7 +314,7 @@ html, body {
   }
 
   #role { color: #666; }
-  #nav a { color: #666; }
+  /*#nav a { color: #666; } */
   #nav-toggle { border-color: #363636; }
   #nav-toggle span { background: #999; }
   #nav-drawer a:hover { color: var(--alive); }
@@ -321,6 +329,10 @@ html, body {
   #fab-main.open { box-shadow: 0 2px 16px rgba(0,0,0,0.5); }
 }
 
+@keyframes rgb-cycle {
+  0%   { color: hsl(0,   100%, 50%); }
+  100% { color: hsl(360, 100%, 50%); }
+}
   </style>
 </head>
 <body>
