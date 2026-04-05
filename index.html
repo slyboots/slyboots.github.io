@@ -5,8 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio</title>
+  <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/fantasque-sans-mono" type="text/css" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Bebas+Neue&display=swap');
+    /*@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Bebas+Neue&display=swap');*/
+
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -40,8 +42,9 @@ html, body {
 #name {
   position: absolute;
   top: 28px; left: 32px;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'FantasqueSansMonoRegular', 'Bebas Neue', sans-serif;
   font-size: clamp(28px, 4vw, 52px);
+  font-weight: bold;
   letter-spacing: 0.08em;
   color: var(--alive);
   line-height: 1;
@@ -53,9 +56,10 @@ html, body {
   position: absolute;
   top: calc(28px + clamp(28px, 4vw, 52px) + 6px);
   left: 34px;
-  font-family: 'DM Mono', monospace;
+  font-family: 'FantasqueSansMonoRegular', 'DM Mono', monospace;
   font-size: 11px;
   font-weight: 300;
+  font-style: italic;
   letter-spacing: 0.18em;
   color: #888;
   text-transform: uppercase;
@@ -71,7 +75,7 @@ html, body {
 }
 
 #nav a {
-  font-family: 'DM Mono', monospace;
+  font-family: 'FantasqueSansMonoRegular', 'DM Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -128,7 +132,7 @@ html, body {
 }
 
 #nav-drawer a {
-  font-family: 'DM Mono', monospace;
+  font-family: 'FantasqueSansMonoRegular', 'DM Mono', monospace;
   font-size: 13px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -141,7 +145,7 @@ html, body {
 
 .hud-label {
   position: absolute;
-  font-family: 'DM Mono', monospace;
+  font-family: 'FantasqueSansMonoRegular', 'DM Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.14em;
   color: #bbb;
@@ -162,7 +166,7 @@ html, body {
 }
 
 .ctrl-btn {
-  font-family: 'DM Mono', monospace;
+  font-family: 'FantasqueSansMonoRegular', 'DM Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -222,7 +226,7 @@ html, body {
 }
 
 .fab-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'FantasqueSansMonoRegular', 'DM Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
