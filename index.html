@@ -4,101 +4,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>dwl.dev</title>
+  <title>Portfolio</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Bebas+Neue&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-–dead: #ffffff;
-–alive: #0a0a0a;
-–grid-line: #e8e8e8;
+  --dead: #ffffff;
+  --alive: #0a0a0a;
+  --grid-line: #e8e8e8;
 }
 
 html, body {
-width: 100%; height: 100%;
-overflow: hidden;
-background: var(–dead);
-cursor: crosshair;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--dead);
+  cursor: crosshair;
 }
 
 #canvas {
-display: block;
-position: fixed;
-top: 0; left: 0;
-width: 100vw; height: 100vh;
+  display: block;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
 }
 
 #hud {
-position: fixed;
-inset: 0;
-pointer-events: none;
-z-index: 10;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
 }
 
 #name {
-position: absolute;
-top: 28px; left: 32px;
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: clamp(28px, 4vw, 52px);
-letter-spacing: 0.08em;
-color: var(–alive);
-line-height: 1;
-mix-blend-mode: multiply;
+  position: absolute;
+  top: 28px; left: 32px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(28px, 4vw, 52px);
+  letter-spacing: 0.08em;
+  color: var(--alive);
+  line-height: 1;
+  mix-blend-mode: multiply;
 }
 
 #role {
-position: absolute;
-top: calc(28px + clamp(28px, 4vw, 52px) + 6px);
-left: 34px;
-font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-font-weight: 300;
-letter-spacing: 0.18em;
-color: #888;
-text-transform: uppercase;
+  position: absolute;
+  top: calc(28px + clamp(28px, 4vw, 52px) + 6px);
+  left: 34px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: #888;
+  text-transform: uppercase;
 }
 
 #nav {
-position: absolute;
-top: 32px; right: 32px;
-display: flex;
-gap: 28px;
-pointer-events: auto;
+  position: absolute;
+  top: 32px; right: 32px;
+  display: flex;
+  gap: 28px;
+  pointer-events: auto;
 }
 
 #nav a {
-font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-letter-spacing: 0.18em;
-text-transform: uppercase;
-color: #aaa;
-text-decoration: none;
-transition: color 0.2s;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
-#nav a:hover { color: var(–alive); }
+#nav a:hover { color: var(--alive); }
 
 #nav-toggle {
-display: none;
-background: none;
-border: 1px solid #d0d0d0;
-cursor: pointer;
-padding: 7px 9px;
-flex-direction: column;
-gap: 4px;
-pointer-events: auto;
-z-index: 100;
-position: relative;
+  display: none;
+  background: none;
+  border: 1px solid #d0d0d0;
+  cursor: pointer;
+  padding: 7px 9px;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: auto;
+  z-index: 100;
+  position: relative;
 }
 
 #nav-toggle span {
-display: block;
-width: 18px; height: 1.5px;
-background: #666;
-transition: transform 0.25s, opacity 0.25s;
-transform-origin: center;
+  display: block;
+  width: 18px; height: 1.5px;
+  background: #666;
+  transition: transform 0.25s, opacity 0.25s;
+  transform-origin: center;
 }
 
 #nav-toggle.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
@@ -106,206 +106,206 @@ transform-origin: center;
 #nav-toggle.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
 
 #nav-drawer {
-display: none;
-position: absolute;
-top: 0; right: 0;
-width: 100vw;
-background: #00000044;
-backdrop-filter: blur(8px);
-flex-direction: column;
-align-items: flex-end;
-padding: 80px 32px 36px;
-gap: 24px;
-pointer-events: auto;
-transform: translateY(-100%);
-transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  display: none;
+  position: absolute;
+  top: 0; right: 0;
+  width: 100vw;
+  background: #00000044;
+  backdrop-filter: blur(8px);
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 80px 32px 36px;
+  gap: 24px;
+  pointer-events: auto;
+  transform: translateY(-100%);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
 #nav-drawer.open {
-transform: translateY(0);
+  transform: translateY(0);
 }
 
 #nav-drawer a {
-font-family: ‘DM Mono’, monospace;
-font-size: 13px;
-letter-spacing: 0.22em;
-text-transform: uppercase;
-color: #eee;
-text-decoration: none;
-transition: color 0.2s;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #eee;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
-#nav-drawer a:hover { color: var(–dead); }
+#nav-drawer a:hover { color: var(--dead); }
 
 .hud-label {
-position: absolute;
-font-family: ‘DM Mono’, monospace;
-font-size: 10px;
-letter-spacing: 0.14em;
-color: #bbb;
-text-transform: uppercase;
+  position: absolute;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: #bbb;
+  text-transform: uppercase;
 }
 
 #status { bottom: 28px; left: 32px; }
 #gen    { bottom: 28px; right: 32px; }
 
 #controls {
-position: absolute;
-bottom: 24px;
-left: 50%;
-transform: translateX(-50%);
-display: flex;
-gap: 16px;
-pointer-events: auto;
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 16px;
+  pointer-events: auto;
 }
 
 .ctrl-btn {
-font-family: ‘DM Mono’, monospace;
-font-size: 10px;
-letter-spacing: 0.16em;
-text-transform: uppercase;
-background: none;
-border: 1px solid #d0d0d0;
-color: #aaa;
-padding: 6px 14px;
-cursor: pointer;
-transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid #d0d0d0;
+  color: #aaa;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s;
 }
 
 .ctrl-btn:hover {
-border-color: var(–alive);
-color: var(–alive);
+  border-color: var(--alive);
+  color: var(--alive);
 }
 
 .ctrl-btn.active {
-background: var(–alive);
-color: var(–dead);
-border-color: var(–alive);
+  background: var(--alive);
+  color: var(--dead);
+  border-color: var(--alive);
 }
 
 #fab-wrap {
-display: none;
-position: fixed;
-bottom: 28px;
-left: 50%;
-transform: translateX(-50%);
-flex-direction: column;
-align-items: center;
-gap: 12px;
-pointer-events: auto;
-z-index: 20;
+  display: none;
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+  z-index: 20;
 }
 
 #fab-tray {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 10px;
-opacity: 0;
-pointer-events: none;
-transform: translateY(10px);
-transition: opacity 0.22s ease, transform 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
 #fab-tray.open {
-opacity: 1;
-pointer-events: auto;
-transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .fab-item {
-display: flex;
-align-items: center;
-gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .fab-label {
-font-family: ‘DM Mono’, monospace;
-font-size: 10px;
-letter-spacing: 0.16em;
-text-transform: uppercase;
-color: #666;
-background: rgba(255,255,255,0.92);
-border: 1px solid #e0e0e0;
-padding: 4px 10px;
-white-space: nowrap;
-backdrop-filter: blur(4px);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #666;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid #e0e0e0;
+  padding: 4px 10px;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
 }
 
 .fab-btn {
-border-radius: 50%;
-border: 1px solid #d0d0d0;
-background: #fff;
-cursor: pointer;
-display: flex;
-align-items: center;
-justify-content: center;
-transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+  border-radius: 50%;
+  border: 1px solid #d0d0d0;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
 }
 
 .fab-btn svg {
-fill: none;
-stroke-width: 1.5;
-stroke-linecap: round;
-stroke-linejoin: round;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .fab-action {
-width: 40px; height: 40px;
+  width: 40px; height: 40px;
 }
 
 .fab-action svg { width: 16px; height: 16px; stroke: #888; }
-.fab-action:hover { border-color: var(–alive); background-color: #f5f5f5; }
-.fab-action.active { background-color: var(–alive); border-color: var(–alive); }
+.fab-action:hover { border-color: var(--alive); background-color: #f5f5f5; }
+.fab-action.active { background-color: var(--alive); border-color: var(--alive); }
 .fab-action.active svg { stroke: #fff; }
 
 #fab-main {
-width: 48px; height: 48px;
-border-width: 1.5px;
-border-color: #c0c0c0;
-box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  width: 48px; height: 48px;
+  border-width: 1.5px;
+  border-color: #c0c0c0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
 #fab-main svg { width: 18px; height: 18px; stroke: #555; transition: transform 0.3s; }
-#fab-main:hover { border-color: var(–alive); }
-#fab-main.open { border-color: var(–alive); box-shadow: 0 2px 16px rgba(0,0,0,0.13); }
+#fab-main:hover { border-color: var(--alive); }
+#fab-main.open { border-color: var(--alive); box-shadow: 0 2px 16px rgba(0,0,0,0.13); }
 #fab-main.open svg { transform: rotate(45deg); }
 
 @media (max-width: 600px) {
-#nav-links { display: none; }
-#nav-toggle { display: flex; }
-#nav-drawer { display: flex; }
+  #nav-links { display: none; }
+  #nav-toggle { display: flex; }
+  #nav-drawer { display: flex; }
 
-#controls { display: none; }
-#fab-wrap  { display: flex; }
+  #controls { display: none; }
+  #fab-wrap  { display: flex; }
 
-#status { display: none; }
+  #status { display: none; }
 
-/* bottom: 90px clears the fixed FAB sitting above this element */
-#gen { right: 50%; transform: translateX(50%); bottom: 90px; }
+  /* bottom: 90px clears the fixed FAB sitting above this element */
+  #gen { right: 50%; transform: translateX(50%); bottom: 90px; }
 }
 
 @media (prefers-color-scheme: dark) {
-:root {
-–dead: #1a1a1a;
-–alive: #ebebeb;
-–grid-line: #262626;
-}
+  :root {
+    --dead: #1a1a1a;
+    --alive: #ebebeb;
+    --grid-line: #262626;
+  }
 
-#role { color: #666; }
-#nav a { color: #666; }
-#nav-toggle { border-color: #363636; }
-#nav-toggle span { background: #999; }
-#nav-drawer a:hover { color: var(–alive); }
-.hud-label { color: #555; }
-.ctrl-btn { color: #666; border-color: #363636; }
-.fab-label { color: #888; background: rgba(26,26,26,0.92); border-color: #363636; }
-.fab-btn { background: #242424; border-color: #363636; }
-.fab-action svg { stroke: #888; }
-.fab-action:hover { background-color: #2e2e2e; }
-#fab-main { border-color: #404040; box-shadow: 0 2px 12px rgba(0,0,0,0.4); }
-#fab-main svg { stroke: #999; }
-#fab-main.open { box-shadow: 0 2px 16px rgba(0,0,0,0.5); }
+  #role { color: #666; }
+  #nav a { color: #666; }
+  #nav-toggle { border-color: #363636; }
+  #nav-toggle span { background: #999; }
+  #nav-drawer a:hover { color: var(--alive); }
+  .hud-label { color: #555; }
+  .ctrl-btn { color: #666; border-color: #363636; }
+  .fab-label { color: #888; background: rgba(26,26,26,0.92); border-color: #363636; }
+  .fab-btn { background: #242424; border-color: #363636; }
+  .fab-action svg { stroke: #888; }
+  .fab-action:hover { background-color: #2e2e2e; }
+  #fab-main { border-color: #404040; box-shadow: 0 2px 12px rgba(0,0,0,0.4); }
+  #fab-main svg { stroke: #999; }
+  #fab-main.open { box-shadow: 0 2px 16px rgba(0,0,0,0.5); }
 }
 
   </style>
@@ -358,11 +358,9 @@ box-shadow: 0 2px 12px rgba(0,0,0,0.08);
       </div>
     </div>
 
-```
-<button class="fab-btn" id="fab-main" aria-label="Controls">
-  <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-</button>
-```
+    <button class="fab-btn" id="fab-main" aria-label="Controls">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
 
   </div>
 </div>
@@ -372,13 +370,11 @@ box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   "name":       "Dakota Wisdom Lorance",
   "role":       "I write code. Sometimes it works.",
   "pageTitle":  "dwl.dev",
-
   "nav": [
-    { "label": "Coding",    "href": "https://github.com/slyboots/" },
-    { "label": "Gaming",   "href": "https://twitch.tv/likethestates/home"},
-    { "label": "Networking", "href": "https://www.linkedin.com/in/dakota-wisdom-lorance" }
+    {"label": "Coding","href": "https://github.com/slyboots/"},
+    {"label": "Gaming","href": "https://twitch.tv/likethestates/home"},
+    {"label": "Networking","href": "https://www.linkedin.com/in/dakota-wisdom-lorance"}
   ],
-
   "cellSize":        20,
   "tickInterval":    2000,
   "randomFillRatio": 0.25
